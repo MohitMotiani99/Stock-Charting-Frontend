@@ -22,10 +22,14 @@ export default function PageHeader(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        News
+                    <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                        Stonks!
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit">
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            Login
+                        </Typography>
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Box>

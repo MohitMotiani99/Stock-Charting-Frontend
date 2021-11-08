@@ -1,16 +1,28 @@
 import './App.css';
 import { Grid } from '@mui/material';
-import PersistentDrawerLeft from './components/home/SideMenu2';
 import SideMenu from './components/home/SideMenu';
+import Features from './components/home/Features';
+import PageHeader from './components/home/PageHeader';
 
 function App() {
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        {/* <PersistentDrawerLeft></PersistentDrawerLeft> */}
+    <Grid container spacing={10}>
+      <Grid item xs={3}>
+        <PageHeader></PageHeader>
         <SideMenu></SideMenu>
       </Grid>
+
+      <Grid item xs={8}>
+        <Features></Features>
+      </Grid>
+
+
     </Grid>
+    // <div>
+    //   <PageHeader></PageHeader>
+    //   <SideMenu></SideMenu>
+    //   <Features></Features>
+    // </div>
   );
 }
 

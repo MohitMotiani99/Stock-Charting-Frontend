@@ -1,11 +1,8 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Grid } from '@mui/material';
 
 var LOGGED_IN = false
@@ -53,7 +50,7 @@ export default function PageHeader(props) {
             <Grid container>
                 <AppBar
                     sx={{
-                        width: { sm: `calc(100% - ${drawerWidth}px)` },
+                        width: '80%',
                         ml: { sm: `${drawerWidth}px` },
                     }}
 

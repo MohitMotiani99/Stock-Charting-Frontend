@@ -9,7 +9,7 @@ import user from '../../static/user.png'
 
 export default function Features(props) {
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ pt: 20 }}>
             <Grid item md={3}>
                 <DisplayCard name="Companies" brief="View All the Registerd Companies and Click on them to explore each of them in
                                         detail" image={company}></DisplayCard>

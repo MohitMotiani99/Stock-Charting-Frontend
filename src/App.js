@@ -1,28 +1,24 @@
 import './App.css';
-import { Grid } from '@mui/material';
-import SideMenu from './components/home/SideMenu';
-import Features from './components/home/Features';
-import PageHeader from './components/home/PageHeader';
+import HomePage from './components/home/HomePage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Companies from './components/company/Companies';
+import { Provider } from 'react-redux';
+import React from 'react';
+import store from './store/store';
 
 function App() {
   return (
-    <Grid container spacing={10}>
-      <Grid item xs={3}>
-        <PageHeader></PageHeader>
-        <SideMenu></SideMenu>
-      </Grid>
 
-      <Grid item xs={8}>
-        <Features></Features>
-      </Grid>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/Companies" element={<Companies />}></Route>
+          <Route exact path="/" element={<HomePage />}></Route>
 
+        </Routes>
+      </BrowserRouter>
+    </Provider>
 
-    </Grid>
-    // <div>
-    //   <PageHeader></PageHeader>
-    //   <SideMenu></SideMenu>
-    //   <Features></Features>
-    // </div>
   );
 }
 

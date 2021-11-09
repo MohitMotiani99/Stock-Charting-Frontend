@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../home/PageHeader";
 import SideMenu from "../home/SideMenu";
 import CompanyList from "./CompanyList";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import * as CompanyActions from '../../actions/CompanyActions'
 
 
@@ -19,7 +19,7 @@ const getAllCompanies = () => {
             listedInStockExchange: false,
             sector: "Telecom",
             boardOfDirectors: ["Mark Miller", "Liam Livington"],
-            brief: "Aus Biggest Telecom Networks"
+            brief: "Telstra is Australia’s leading telecommunications and technology company, offering a full range of communications services and competing in all telecommunications markets.In Australia we provide 18.8 million retail mobile services, 3.8 million retail fixed bundles and standalone data services and 960,000 retail fixed standalone voice services."
         },
         {
             companyName: "SocGen",
@@ -33,23 +33,11 @@ const getAllCompanies = () => {
 
 function Companies(props) {
 
+    const dispatch = useDispatch()
     const [companies, setCompanies] = useState([])
 
-    useEffect(() => {
-
-        // fetch('http://localhost:8088/companies/', {
-        //     method: 'GET'
-        // })
-        //     .then(res => {
-        //         console.log(res)
-        //         res.json()
-        //     })
-        //     .then(data => {
-        //         console.log(data)
-        //         setCompanies(data)
-        //     })
-
-        props.setCompanyList(getAllCompanies())
+    useEffect(async () => {
+        await dispatch(CompanyActions.getCompanyList())
     }, [])
 
     return (
@@ -59,7 +47,7 @@ function Companies(props) {
                 <SideMenu />
             </Grid>
             <Grid item xs={8}>
-                <CompanyList companyList={getAllCompanies()}></CompanyList>
+                <CompanyList companyList={props.companyList}></CompanyList>
             </Grid>
         </Grid>
 

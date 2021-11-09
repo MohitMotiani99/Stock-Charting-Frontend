@@ -6,3 +6,15 @@ export function setCompanyList(payload) {
         payload
     }
 }
+
+export function getCompanyList() {
+    return async function (dispatch) {
+        const res = fetch('http://localhost:8088/companies/', {
+            method: 'GET'
+        })
+            .then(res => res.json())
+            .then(data => dispatch(setCompanyList(data)))
+            .catch(err => console.log("Error Uwu"))
+
+    }
+}

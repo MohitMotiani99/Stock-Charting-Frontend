@@ -48,9 +48,9 @@ function CompanyList(props) {
                 </AppBar>
             </Grid>
 
-            {console.log(companies)}
+            {console.log(props.companyList)}
             {
-                (companies ? companies : props.companyList).map((comp) => {
+                (companies.length != 0 ? companies : props.companyList).map((comp) => {
                     return <Grid item md={3}>
                         <CompanyCard company={comp} />
                     </Grid>

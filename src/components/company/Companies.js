@@ -1,12 +1,40 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../home/PageHeader";
 import SideMenu from "../home/SideMenu";
 import CompanyList from "./CompanyList";
-import CompanySearch from "./CompanySearch";
+import { connect } from "react-redux";
+import * as CompanyActions from '../../actions/CompanyActions'
 
 
-export default function Companies(props) {
+const getAllCompanies = () => {
+
+    setTimeout(() => {
+
+
+    }, 0)
+
+    return [
+        {
+            companyName: "Telstra",
+            brief: "Biggest Telecom in Aus"
+        },
+        {
+            companyName: "SocGen",
+            brief: "One of the Biggest Retail Investment Banks in France"
+        }
+    ]
+
+}
+
+
+
+function Companies(props) {
+
+    useEffect(() => {
+        props.setCompanyList(getAllCompanies())
+    }, [])
+
     return (
         <Grid container spacing={0}>
             <Grid item xs={3}>
@@ -14,14 +42,23 @@ export default function Companies(props) {
                 <SideMenu />
             </Grid>
             <Grid item xs={8}>
-                <CompanySearch />
-            </Grid>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={8}>
-                <CompanyList></CompanyList>
+                <CompanyList companyList={getAllCompanies()}></CompanyList>
             </Grid>
 
 
         </Grid>
     );
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setCompanyList: companyList => dispatch(CompanyActions.setCompanyList(companyList))
+    }
+}
+function mapStateToProps(state) {
+    return {
+        companyList: state.companyReducer.companyList
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Companies)

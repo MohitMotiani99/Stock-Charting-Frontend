@@ -31,7 +31,7 @@ export default function CompanyCard(props) {
                         <CardContent>
                             <Grid item xs={12}>
                                 <Typography gutterBottom variant='h4' component='div'>
-                                    {props.name}
+                                    {props.companyName}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>

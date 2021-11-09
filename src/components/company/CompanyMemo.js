@@ -5,6 +5,8 @@ import Ceo from "./CompanyMemoComponents/Ceo";
 import Turnover from "./CompanyMemoComponents/Turnover";
 import { Row, Col, Container } from "react-grid-system";
 import CompSector from "./CompanyMemoComponents/CompSector";
+import DirectorBoard from "./CompanyMemoComponents/DirectorBoard";
+import StockExchangeCodes from "./CompanyMemoComponents/StockExchangeCodes";
 
 const styles = {
     bgcolor: 'background.paper',
@@ -51,6 +53,17 @@ export default function CompanyMemo(props) {
                     </Row>
                 </Col>
 
+            </Row>
+            <Row xs={12}>
+                <Col xs={12}>
+                    <DirectorBoard boardOfDirectors={props.company.boardOfDirectors}></DirectorBoard>
+                </Col>
+            </Row>
+
+            <Row xs={12}>
+                <Col xs={12}>
+                    <StockExchangeCodes companyName={props.company.companyName} stockExchangeCodes={props.company.stockExchangeCodes}></StockExchangeCodes>
+                </Col>
             </Row>
 
 

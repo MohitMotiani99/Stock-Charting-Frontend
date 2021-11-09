@@ -35,7 +35,8 @@ export default function Ceo(props) {
                             <Grid item xs={12}>
                                 <Typography variant="h5" color="text.secondary"
                                     sx={{
-                                        width: '100%'
+                                        width: '100%',
+                                        fontStyle: 'italic'
                                     }}
                                 >
                                     {quotes[Math.floor(Math.random() * 7)]}

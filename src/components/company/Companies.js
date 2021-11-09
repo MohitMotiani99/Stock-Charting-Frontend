@@ -36,8 +36,8 @@ function Companies(props) {
     const dispatch = useDispatch()
     const [companies, setCompanies] = useState([])
 
-    useEffect(async () => {
-        await dispatch(CompanyActions.getCompanyList())
+    useEffect(() => {
+        dispatch(CompanyActions.getCompanyList())
     }, [])
 
     return (

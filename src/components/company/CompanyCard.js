@@ -39,8 +39,8 @@ export default function CompanyCard(props) {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' color='text.secondary'>
-                                    {props.company.brief}
+                                <Typography variant='h5' color='text.secondary'>
+                                    {props.company.sector + ' Giant'}
                                 </Typography>
                             </Grid>
                         </CardContent>

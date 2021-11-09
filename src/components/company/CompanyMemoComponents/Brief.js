@@ -1,7 +1,7 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import Paper from '@mui/material/Paper';
-
+import InfoIcon from '@mui/icons-material/Info';
 
 export default function Brief(props) {
 
@@ -9,12 +9,19 @@ export default function Brief(props) {
 
     return (
         <Grid container>
-            <Grid item xs={12}>
-                <Typography variant='h6'>
-                    About Us
-                </Typography>
-            </Grid>
             <Grid item xs={12} container>
+                <Grid item xs={2}>
+                    <IconButton color='primary'>
+                        <InfoIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs={10}>
+                    <Typography variant='h4' color='blue'>
+                        About Us
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid item xs={12} container sx={{ pt: 1 }}>
                 <Paper
                     sx={{
                         bgcolor: 'gray',
@@ -26,7 +33,7 @@ export default function Brief(props) {
                 >
 
                     <Grid item xs={12}>
-                        <Typography variant='body2' component='div'>
+                        <Typography variant='h6' component='div'>
                             {props.brief}
                         </Typography>
                     </Grid>

@@ -8,6 +8,7 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import CreateIcon from '@mui/icons-material/Create';
 import { NavLink } from 'react-router-dom'
+import HomeIcon from '@mui/icons-material/Home';
 
 
 
@@ -59,13 +60,15 @@ export default function SideMenu(props) {
                     <Grid item container direction='column'>
                         <List>
                             {
-                                ['Companies', 'Exchanges', 'Sectors', 'Users'].map((text) => (
+                                ['', 'Companies', 'Exchanges', 'Sectors', 'Users'].map((text) => (
                                     <Grid item xs={12}>
                                         <NavLink exact to={"/" + text}>
                                             <ListItem button key={text}>
                                                 <ListItemIcon>
                                                     {(() => {
                                                         switch (text) {
+                                                            case '':
+                                                                return <HomeIcon />
                                                             case 'Companies':
                                                                 return <BusinessIcon />
                                                             case 'Exchanges':
@@ -78,7 +81,7 @@ export default function SideMenu(props) {
                                                     })()}
                                                     {/* <MenuIcon /> */}
                                                 </ListItemIcon>
-                                                <ListItemText primary={text} />
+                                                <ListItemText primary={text == '' ? 'Home' : text} />
                                             </ListItem>
                                         </NavLink>
                                     </Grid>

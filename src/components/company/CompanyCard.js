@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,7 +11,11 @@ import pattern3 from '../../static/patterns/pattern3.jpg'
 import pattern4 from '../../static/patterns/pattern4.jpg'
 import pattern5 from '../../static/patterns/pattern5.jpg'
 
+import { useNavigate } from "react-router";
+
 export default function CompanyCard(props) {
+
+    let navigate = useNavigate()
 
     return (
         <Grid container spacing={2}>
@@ -31,20 +35,28 @@ export default function CompanyCard(props) {
                         <CardContent>
                             <Grid item xs={12}>
                                 <Typography gutterBottom variant='h4' component='div'>
-                                    {props.companyName}
+                                    {props.company.companyName}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant='body2' color='text.secondary'>
-                                    {props.brief}
+                                    {props.company.brief}
                                 </Typography>
                             </Grid>
                         </CardContent>
                     </Grid>
                 </CardActionArea>
-                <Grid>
+                <Grid item>
                     <CardActions>
-                        <Button size='small' color='primary'>
+                        <Button size='small' color='primary'
+                            onClick={() => {
+                                navigate(`/company/${props.company.companyId}`, {
+                                    state: {
+                                        company: props.company
+                                    }
+                                })
+                            }}
+                        >
                             Learn More
                         </Button>
                     </CardActions>

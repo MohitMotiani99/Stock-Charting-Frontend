@@ -9,15 +9,17 @@ import * as CompanyActions from '../../actions/CompanyActions'
 
 const getAllCompanies = () => {
 
-    setTimeout(() => {
-
-
-    }, 0)
 
     return [
         {
+            companyId: "ABCD",
             companyName: "Telstra",
-            brief: "Biggest Telecom in Aus"
+            turnover: 86000,
+            ceo: "Andy Miller",
+            listedInStockExchange: false,
+            sector: "Telecom",
+            boardOfDirectors: ["Mark Miller", "Liam Livington"],
+            brief: "Aus Biggest Telecom Networks"
         },
         {
             companyName: "SocGen",
@@ -31,7 +33,22 @@ const getAllCompanies = () => {
 
 function Companies(props) {
 
+    const [companies, setCompanies] = useState([])
+
     useEffect(() => {
+
+        // fetch('http://localhost:8088/companies/', {
+        //     method: 'GET'
+        // })
+        //     .then(res => {
+        //         console.log(res)
+        //         res.json()
+        //     })
+        //     .then(data => {
+        //         console.log(data)
+        //         setCompanies(data)
+        //     })
+
         props.setCompanyList(getAllCompanies())
     }, [])
 
@@ -44,9 +61,8 @@ function Companies(props) {
             <Grid item xs={8}>
                 <CompanyList companyList={getAllCompanies()}></CompanyList>
             </Grid>
-
-
         </Grid>
+
     );
 }
 

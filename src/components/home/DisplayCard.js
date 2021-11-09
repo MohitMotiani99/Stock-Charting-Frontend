@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Grid } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 
 export default function DisplayCard(props) {
+
+    let navigate = useNavigate()
+
     return (
         <Grid container spacing={2}>
             <Card sx={{ border: "groove", maxWidth: 300, maxHeight: 400 }}>
@@ -38,7 +42,9 @@ export default function DisplayCard(props) {
                 </CardActionArea>
                 <Grid>
                     <CardActions>
-                        <Button size='small' color='primary'>
+                        <Button size='small' color='primary'
+                            onClick={() => { navigate(props.next) }}
+                        >
                             Click Here
                         </Button>
                     </CardActions>

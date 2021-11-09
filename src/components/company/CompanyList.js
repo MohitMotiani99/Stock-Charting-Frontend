@@ -52,7 +52,7 @@ function CompanyList(props) {
             {
                 (companies ? companies : props.companyList).map((comp) => {
                     return <Grid item md={3}>
-                        <CompanyCard companyName={comp.companyName} brief={comp.brief} />
+                        <CompanyCard company={comp} />
                     </Grid>
                 })
             }

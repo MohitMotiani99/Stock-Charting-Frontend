@@ -12,19 +12,19 @@ export default function Features(props) {
         <Grid container spacing={3} sx={{ pt: 20 }}>
             <Grid item md={3}>
                 <DisplayCard name="Companies" brief="View All the Registerd Companies and Click on them to explore each of them in
-                                        detail" image={company}></DisplayCard>
+                                        detail" image={company} next="/companies"></DisplayCard>
             </Grid>
             <Grid item md={3}>
                 <DisplayCard name="Stock Exchanges" brief="View All the Registerd Stock Exchanges and Click on them to explore each of them in
-                                        detail" image={stock_exchange}></DisplayCard>
+                                        detail" image={stock_exchange} next='/exchanges'></DisplayCard>
             </Grid>
             <Grid item md={3}>
                 <DisplayCard name="Sectors" brief="View All the Registerd Sectors and Click on them to explore each of them in
-                                        detail" image={sector}></DisplayCard>
+                                        detail" image={sector} next='/sectors'></DisplayCard>
             </Grid>
             <Grid item md={3}>
                 <DisplayCard name="Users" brief="View All the Registerd Users and Click on them to explore each of them in
-                                        detail" image={user}></DisplayCard>
+                                        detail" image={user} next='/users'></DisplayCard>
             </Grid>
         </Grid>
     )

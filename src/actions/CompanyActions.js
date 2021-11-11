@@ -19,3 +19,19 @@ export function getCompanyList() {
     }
 }
 
+export function saveCompany(payload) {
+    return async function (dispatch) {
+        const res = fetch('http://localhost:8088/companies/save', {
+            method: 'POST',
+            Headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(data => console.log("Saved"))
+            .catch(err => console.log("Error Uwu"))
+
+    }
+}
+

@@ -1,1 +1,2 @@
 export const SET_COMPANY_LIST = "SET_COMPANY_LIST"
+export const SAVE_COMPANY = "SAVE_COMPANY"

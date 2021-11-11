@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import CompanyCard from "./CompanyCard";
-import { Grid } from "@mui/material";
+import { Button, Grid, IconButton } from "@mui/material";
 import { connect } from "react-redux";
 import * as CompanyActions from '../../actions/CompanyActions'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import AddIcon from '@mui/icons-material/Add';
+import SaveCompany from "./AdminModeComponents/SaveCompany";
+
 
 
 function CompanyList(props) {
@@ -14,9 +17,17 @@ function CompanyList(props) {
 
     const [companies, setCompanies] = useState(props.companyList)
 
+    const [popUp, setPopUp] = useState(false)
+    let [adminMode, setAdminMode] = useState("none")
+
+    useEffect(() => {
+        if (props.admin)
+            setAdminMode("flex")
+    }, [])
+
     return (
 
-        <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
+        (!popUp) ? <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
 
             <Grid item container sx={{ pt: 20 }}>
                 <AppBar position='relative'>
@@ -44,6 +55,18 @@ function CompanyList(props) {
                                 ></InputBase>
                             </div>
                         </Grid>
+                        <Grid item xs={3} />
+                        <Grid item xs={5}>
+                            <Button variant='contained' color='success' fullWidth
+                                onClick={() => setPopUp(true)}
+                            >
+                                <IconButton color='primary'>
+                                    <AddIcon></AddIcon>
+                                </IconButton>
+                                Add Company
+                            </Button>
+                        </Grid>
+
                     </Toolbar>
                 </AppBar>
             </Grid>
@@ -57,11 +80,16 @@ function CompanyList(props) {
                 })
             }
 
-        </Grid>
+
+        </Grid> : <SaveCompany trigger={popUp} setTrigger={setPopUp}></SaveCompany>
     );
 
 
 }
+function mapStateToProps(state) {
+    return {
+        admin: state.homeReducer.admin
+    }
+}
 
-
-export default CompanyList
+export default connect(mapStateToProps)(CompanyList)

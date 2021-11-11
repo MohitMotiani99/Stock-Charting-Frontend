@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Brief from "./CompanyMemoComponents/Brief";
 import Ceo from "./CompanyMemoComponents/Ceo";
 import Turnover from "./CompanyMemoComponents/Turnover";
@@ -7,6 +7,9 @@ import { Row, Col, Container } from "react-grid-system";
 import CompSector from "./CompanyMemoComponents/CompSector";
 import DirectorBoard from "./CompanyMemoComponents/DirectorBoard";
 import StockExchangeCodes from "./CompanyMemoComponents/StockExchangeCodes";
+import StockPriceChart from "./CompanyMemoComponents/StockPriceChart";
+import { connect, useDispatch } from "react-redux";
+import * as StockPriceActions from '../../actions/StockPriceActions'
 
 const styles = {
     bgcolor: 'background.paper',
@@ -17,7 +20,21 @@ const styles = {
     height: '5rem',
 }
 
-export default function CompanyMemo(props) {
+function CompanyMemo(props) {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(StockPriceActions.setCurrCompany(props.company))
+        dispatch(StockPriceActions.setCompanyStats({
+            stockSeries1List: [],
+            avgPrice: 0.0,
+            maxPrice: 0.0,
+            minPrice: 0.0,
+            growth: 0.0
+        }))
+    }, [])
+
     console.log(props.company.brief)
     return (
         <Container fluid>
@@ -66,9 +83,20 @@ export default function CompanyMemo(props) {
                 </Col>
             </Row>
 
-
+            <Row xs={12}>
+                <Col xs={12}>
+                    <StockPriceChart stockExchangeCodes={props.company.stockExchangeCodes}></StockPriceChart>
+                </Col>
+            </Row>
 
 
         </Container>
     );
 }
+function mapStateToProps(state) {
+    return {
+        currCompany: state.stockPriceReducer.currCompany
+    }
+}
+
+export default connect(mapStateToProps)(CompanyMemo)

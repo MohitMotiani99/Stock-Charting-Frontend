@@ -33,7 +33,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function StockExchangeCodes(props) {
 
-    console.log(props.stockExchangeCodes)
 
     return (
         <Grid container sx={{ pt: 10 }}>

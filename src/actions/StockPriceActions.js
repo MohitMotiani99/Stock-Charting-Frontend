@@ -34,7 +34,12 @@ export function setEnd(payload) {
         payload
     }
 }
-
+export function setCurrExchange(payload) {
+    return {
+        type: StockPriceActionTypes.SET_CURR_EXCHANGE,
+        payload
+    }
+}
 export function getCompanyStats(payload) {
     return async function (dispatch) {
         fetch(`http://localhost:8086/prices/company/stock-variations/${payload.stockExchangeName}/${payload.companyCode}?start=${payload.start}&end=${payload.end}`, {

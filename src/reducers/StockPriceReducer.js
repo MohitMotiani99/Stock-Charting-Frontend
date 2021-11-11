@@ -21,6 +21,20 @@ const initialState = {
         stockExchangeCodes: {}
     },
     currStock: "NASDAQ",
+    currExchange: {
+        stockExchangeId: "",
+        stockExchangeName: "",
+        brief: "",
+        contactAddress: {
+            buildingNumber: "",
+            street: "",
+            city: "",
+            state: "",
+            country: "",
+            zip: ""
+        },
+        remarks: ""
+    },
     start: subMonths(new Date(), 6),
     end: new Date(),
 }
@@ -71,6 +85,12 @@ export default function stockPriceReducer(state = initialState, action) {
         return {
             ...state,
             end: action.payload
+        }
+    }
+    else if (action.type === StockPriceActionTypes.SET_CURR_EXCHANGE) {
+        return {
+            ...state,
+            currExchange: action.payload
         }
     }
     return state

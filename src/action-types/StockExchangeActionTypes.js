@@ -1,1 +1,4 @@
 export const SET_SE_LIST = "SET_SE_LIST"
+export const SAVE_EXCHANGE = "SAVE_EXCHANGE"
+// export const DELETE_COMPANY = "DELETE_COMPANY"
+export const UPDATE_EXCHANGE = "UPDATE_EXCHANGE"

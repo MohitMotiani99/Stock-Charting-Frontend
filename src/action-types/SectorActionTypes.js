@@ -1,0 +1,1 @@
+export const SET_SECTOR_LIST = "SET_SECTOR_LIST"

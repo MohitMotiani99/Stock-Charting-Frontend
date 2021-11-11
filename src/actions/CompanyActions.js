@@ -14,24 +14,56 @@ export function getCompanyList() {
         })
             .then(res => res.json())
             .then(data => dispatch(setCompanyList(data)))
-            .catch(err => console.log("Error Uwu"))
+            .catch(err => console.log(err))
 
     }
 }
+
 
 export function saveCompany(payload) {
     return async function (dispatch) {
         const res = fetch('http://localhost:8088/companies/save', {
             method: 'POST',
-            Headers: {
+            headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         })
-            .then(res => res.json())
-            .then(data => console.log("Saved"))
-            .catch(err => console.log("Error Uwu"))
+            .then(res => res.text())
+            .then((data) => {
+                console.log("Saved")
+                return data === "" ? {} : dispatch(getCompanyList())
+            })
+            .catch(err => console.log(err))
 
     }
 }
 
+export function deleteCompany(payload) {
+    return async function (dispatch) {
+        fetch(`http://localhost:8088/companies/delete?companyId=${payload}`, {
+            method: 'DELETE',
+        })
+            .then(() => dispatch(getCompanyList()))
+            .catch(err => console.log(err))
+    }
+}
+
+export function updateCompany(payload) {
+    return async function (dispatch) {
+        const res = fetch(`http://localhost:8088/companies/update?companyId=${payload.companyId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.text())
+            .then((data) => {
+                console.log("Saved")
+                return data === "" ? {} : dispatch(getCompanyList())
+            })
+            .catch(err => console.log(err))
+
+    }
+}

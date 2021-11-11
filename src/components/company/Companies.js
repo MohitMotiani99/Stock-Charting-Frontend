@@ -47,7 +47,7 @@ function Companies(props) {
                 <SideMenu />
             </Grid>
             <Grid item xs={8}>
-                <CompanyList companyList={props.companyList}></CompanyList>
+                <CompanyList ></CompanyList>
             </Grid>
         </Grid>
 

@@ -1,0 +1,1 @@
+export const SET_SE_LIST = "SET_SE_LIST"

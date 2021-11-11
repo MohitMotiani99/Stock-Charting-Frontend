@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CompanyCard from "./CompanyCard";
 import { Button, Grid, IconButton } from "@mui/material";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import * as CompanyActions from '../../actions/CompanyActions'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,21 +9,39 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import AddIcon from '@mui/icons-material/Add';
 import SaveCompany from "./AdminModeComponents/SaveCompany";
-
+import * as StockPriceActions from '../../actions/StockPriceActions'
 
 
 function CompanyList(props) {
 
+    const newCompany = {
+        companyName: "",
+        turnover: 0,
+        ceo: "",
+        boardOfDirectors: [],
+        listedInStockExchange: false,
+        sector: "",
+        brief: "",
+        stockExchangeCodes: {}
+    }
 
-    const [companies, setCompanies] = useState(props.companyList)
+    const dispatch = useDispatch()
+    let [companies, setCompanies] = useState([])
+    let [searchString, setSearchString] = useState("")
 
-    const [popUp, setPopUp] = useState(false)
+    let [popUp, setPopUp] = useState(false)
+    let [ops, setOps] = useState("")
     let [adminMode, setAdminMode] = useState("none")
 
     useEffect(() => {
+
+        setSearchString("")
+        dispatch(CompanyActions.getCompanyList())
+        setCompanies(props.companyList)
         if (props.admin)
             setAdminMode("flex")
     }, [])
+
 
     return (
 
@@ -43,13 +61,16 @@ function CompanyList(props) {
                             >
                                 <SearchIcon />
                                 <InputBase placeholder='Search...'
-                                    onKeyUp={(e) => {
+                                    value={searchString}
+                                    onChange={(e) => {
+                                        setSearchString(e.target.value.toLowerCase())
                                         if (e.target.value) {
-                                            let newCompanyList = companies.filter((comp) => comp.companyName.toLowerCase().includes(e.target.value.toLowerCase()));
+                                            let newCompanyList = (props.companyList).filter((comp) => comp.companyName.toLowerCase().includes(e.target.value.toLowerCase()));
                                             setCompanies(newCompanyList)
                                         }
-                                        else
+                                        else {
                                             setCompanies(props.companyList)
+                                        }
 
                                     }}
                                 ></InputBase>
@@ -58,7 +79,11 @@ function CompanyList(props) {
                         <Grid item xs={3} />
                         <Grid item xs={5}>
                             <Button variant='contained' color='success' fullWidth
-                                onClick={() => setPopUp(true)}
+                                onClick={() => {
+                                    setOps("save")
+                                    dispatch(StockPriceActions.setCurrCompany(newCompany))
+                                    setPopUp(true)
+                                }}
                             >
                                 <IconButton color='primary'>
                                     <AddIcon></AddIcon>
@@ -73,22 +98,23 @@ function CompanyList(props) {
 
             {console.log(props.companyList)}
             {
-                (companies.length != 0 ? companies : props.companyList).map((comp) => {
+                (searchString == null || searchString.length == 0 ? props.companyList : companies).map((comp) => {
                     return <Grid item md={3}>
-                        <CompanyCard company={comp} />
+                        <CompanyCard trigger={popUp} setTrigger={setPopUp} type={ops} setType={setOps} company={comp} />
                     </Grid>
                 })
             }
 
 
-        </Grid> : <SaveCompany trigger={popUp} setTrigger={setPopUp}></SaveCompany>
+        </Grid> : <SaveCompany trigger={popUp} setTrigger={setPopUp} ops={ops}></SaveCompany>
     );
 
 
 }
 function mapStateToProps(state) {
     return {
-        admin: state.homeReducer.admin
+        admin: state.homeReducer.admin,
+        companyList: state.companyReducer.companyList
     }
 }
 

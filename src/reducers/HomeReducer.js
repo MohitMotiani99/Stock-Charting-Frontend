@@ -1,7 +1,7 @@
 import * as HomeActionTypes from '../action-types/HomeActionTypes'
 
 const initialState = {
-    admin: true
+    admin: false
 }
 
 export default function homeReducer(state = initialState, action) {

@@ -1,13 +1,124 @@
-import { Button, Grid, IconButton, TextField } from "@mui/material";
-import React from "react";
-import { connect } from "react-redux";
+import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { connect, useDispatch } from "react-redux";
 import CancelIcon from '@mui/icons-material/Cancel';
 import SaveIcon from '@mui/icons-material/Save';
+import * as SectorActions from '../../../actions/SectorActions'
+import * as StockExchangeActions from '../../../actions/StockExchangeActions'
+import * as CompanyActions from '../../../actions/CompanyActions'
+import * as StockPriceActions from '../../../actions/StockPriceActions'
+import { useNavigate } from "react-router";
 
 function SaveCompany(props) {
+
+
+    let navigate = useNavigate();
+
+    let [sectorName, setSectorName] = useState(props.currCompany.sector)
+    const handleSectorNameChange = (e) => {
+        setSectorName(e.target.value)
+    }
+
+    let [stockName, setStockName] = useState("")
+    const handleStockNameChange = (e) => {
+        setStockName(e.target.value)
+    }
+
+
+    let [comp, setComp] = useState(props.currCompany)
+
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+
+
+        dispatch(SectorActions.getSectorList())
+        dispatch(StockExchangeActions.getSEList())
+    }, [])
+
+    let companyCodeEntry = (key, value) => {
+        return <Grid container>
+            <Grid item xs={6}>
+                <TextField
+                    fullWidth
+                    disabled
+                    id="outlined-required"
+                    value={key}
+                />
+                <TextField
+                    fullWidth
+                    id="outlined-requied"
+                    value={value}
+                    onChange={(e) => handleFieldChange("stockExchangeCodes", { key: key, value: value })}
+                />
+            </Grid>
+
+        </Grid >
+    }
+
+    console.log(props.sectorList)
+
+    let [checked, setChecked] = useState(false)
+
+    let handleFieldChange = (field, value) => {
+        if (field == "companyName") {
+            setComp({
+                ...comp,
+                companyName: value
+            })
+        }
+        else if (field == "turnover") {
+            setComp({
+                ...comp,
+                turnover: Number.parseInt(value)
+            })
+        }
+        else if (field == "ceo") {
+            setComp({
+                ...comp,
+                ceo: value
+            })
+        }
+        else if (field == "brief") {
+            setComp({
+                ...comp,
+                brief: value
+            })
+        }
+        else if (field == "sector") {
+            setComp({
+                ...comp,
+                sector: value
+            })
+        }
+        else if (field == "listedInStockExchange") {
+            setComp({
+                ...comp,
+                listedInStockExchange: value
+            })
+        }
+        else if (field == "boardOfDirectors") {
+            setComp({
+                ...comp,
+                boardOfDirectors: value.split(',')
+            })
+        }
+        else if (field == "stockExchangeCodes") {
+            let stockCodes = comp.stockExchangeCodes
+            stockCodes[value.key] = value.value
+            setComp({
+                ...comp,
+                stockExchangeCodes: stockCodes
+            })
+        }
+    }
     return (
         <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
-            <Grid item xs={10}></Grid>
+            <Grid item xs={10}>
+                <Typography variant='h2' gutterBottom>
+                    Save Company
+                </Typography>
+            </Grid>
             <Grid item xs={2}>
                 <Button onClick={() => props.setTrigger(false)} >
                     <IconButton>
@@ -17,65 +128,154 @@ function SaveCompany(props) {
             </Grid>
             <Grid item xs={12}>
                 <TextField
+                    fullWidth
                     required
                     id="outlined-required"
-                    label="Required"
-                    defaultValue="Company Name"
+                    label="Company Name"
+                    placeholder="Company Name"
+                    value={comp.companyName}
+                    onChange={(e) => handleFieldChange("companyName", e.target.value)}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
-                    required
-                    id="outlined-required"
-                    label="Required"
-                    defaultValue="Turnover"
+                    fullWidth
+
+                    id="outlined-number"
+                    label="Turnover"
+                    type="number"
+                    placeholder="Turnover"
+                    value={comp.turnover}
+                    onChange={(e) => handleFieldChange("turnover", e.target.value)}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
-                    required
+                    fullWidth
+
                     id="outlined-required"
-                    label="Required"
-                    defaultValue="CEO"
+                    label="CEO"
+                    placeholder="CEO"
+                    value={comp.ceo}
+                    onChange={(e) => handleFieldChange("ceo", e.target.value)}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
-                    required
-                    id="outlined-required"
-                    label="Required"
-                    defaultValue="Directors"
+                    fullWidth
+
+                    multiline
+                    rows={5}
+                    maxRows={7}
+                    id="outlined-textarea"
+                    label="Directors"
+                    placeholder="Directors"
+                    value={comp.boardOfDirectors.toString()}
+                    onChange={(e) => handleFieldChange("boardOfDirectors", e.target.value)}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
+                    fullWidth
                     required
-                    id="outlined-required"
-                    label="Required"
-                    defaultValue="Sector"
-                />
+                    id="outlined-select"
+                    select
+                    value={comp.sectorName}
+                    onChange={(e) => handleFieldChange("sectorName", e.target.value)}
+                    helperText="Select a Sector"
+                    label="Sector"
+                    placeholder="Sector"
+                >
+                    {(props.sectorList).map((sector) => (
+                        <MenuItem key={sector.sectorName} value={sector.sectorName}>
+                            {sector.sectorName}
+                        </MenuItem>
+                    ))}
+
+                </TextField>
             </Grid>
             <Grid item xs={12}>
                 <TextField
-                    required
-                    id="outlined-required"
-                    label="Required"
-                    defaultValue="Brief"
+                    fullWidth
+                    multiline
+                    rows={5}
+                    maxRows={7}
+                    id="outlined-textarea"
+                    label="Brief"
+                    placeholder="Brief"
+                    value={comp.brief}
+                    onChange={(e) => handleFieldChange("brief", e.target.value)}
                 />
+            </Grid>
+            <Grid item xs={12} container>
+                <Grid item xs={6}>
+                    <Typography variant='h6'>
+                        Listed in Stock Exchanges ?
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <Checkbox
+                        checked={comp.listedInStockExchange}
+                        onChange={(e) => handleFieldChange("listedInStockExchange", e.target.checked)}
+                    >
+                    </Checkbox>
+                </Grid>
             </Grid>
 
-            <Grid item xs={7}></Grid>
-            <Grid item xs={2}>
-                <IconButton>
-                    <SaveIcon></SaveIcon>
-                </IconButton>
-                <Button onClick={() => props.setTrigger(false)} variant='contained'>
-                    Save
+            {
+                (checked) ? <Grid item xs={12} container>
+                    <Grid item xs={12}>
+                        <Typography variant='h6'>
+                            Enter Company Codes
+                        </Typography>
+                    </Grid>
+                    {[...Object.keys(comp.stockExchangeCodes)].map((key) => (
+                        <Grid item xs={6}>
+                            <currCompany key={key} value={comp.stockExchangeCodes[key]}></currCompany>
+                        </Grid>
+
+                    ))}
+                </Grid> : <Grid item xs={12}></Grid>
+            }
+
+            <Grid item xs={8}></Grid>
+            <Grid item xs={4} sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <Button fullWidth onClick={() => {
+                    if (props.ops == "save")
+                        dispatch(CompanyActions.saveCompany(comp))
+                    else if (props.ops == "update")
+                        dispatch(CompanyActions.updateCompany(comp))
+                    props.setTrigger(false)
+                }}
+                    variant='contained'>
+                    <IconButton>
+                        <SaveIcon></SaveIcon>
+                    </IconButton>
+                    <Typography variant='h5' gutterBottom sx={{
+                        pt: 1.2
+                    }}
+
+                    >
+                        Save
+                    </Typography>
+
                 </Button>
             </Grid>
 
-        </Grid>
+        </Grid >
     );
 }
 
-export default connect()(SaveCompany)
+function mapStateToProps(state) {
+    return {
+        sectorList: state.sectorReducer.sectorList,
+        currCompany: state.stockPriceReducer.currCompany,
+        SEList: state.stockExchangeReducer.SEList
+    }
+}
+
+export default connect(mapStateToProps)(SaveCompany)

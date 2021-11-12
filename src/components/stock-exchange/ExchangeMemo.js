@@ -6,6 +6,7 @@ import * as StockPriceActions from '../../actions/StockPriceActions'
 import Brief from "./ExchangeMemoComponents/Brief";
 import ContactAddress from "./ExchangeMemoComponents/ContactAddress";
 import Remarks from "./ExchangeMemoComponents/Remarks";
+import StockPriceChart from "./ExchangeMemoComponents/StockPriceChart";
 
 const styles = {
     bgcolor: 'background.paper',
@@ -61,6 +62,11 @@ function ExchangeMemo(props) {
                     </Row>
                 </Col>
 
+            </Row>
+            <Row xs={12}>
+                <Col xs={12}>
+                    <StockPriceChart></StockPriceChart>
+                </Col>
             </Row>
 
 

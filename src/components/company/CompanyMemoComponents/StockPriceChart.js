@@ -49,6 +49,12 @@ function StockPriceChart(props) {
         dispatch(StockPriceActions.setCurrStock(stockName))
         dispatch(StockPriceActions.setStart(startDate))
         dispatch(StockPriceActions.setEnd(endDate))
+        dispatch(StockPriceActions.getCompanyStats({
+            stockExchangeName: props.currStock,
+            start: props.start,
+            end: props.end,
+            companyCode: props.currCompany.stockExchangeCodes[props.currStock]
+        }))
 
     }, [])
 
@@ -194,11 +200,11 @@ function StockPriceChart(props) {
             }}>
                 {(() => {
                     if (chartType == "Line")
-                        return <SingleCompany ></SingleCompany>
+                        return <SingleCompany stats={props.companyStats} stats2={[]}></SingleCompany>
                     else if (chartType == "Bar")
-                        return <SingleCompanyBar></SingleCompanyBar>
+                        return <SingleCompanyBar stats={props.companyStats} stats2={[]}></SingleCompanyBar>
                     else if (chartType == "Scatter")
-                        return <SingleCompanyScatter />
+                        return <SingleCompanyScatter stats={props.companyStats} stats2={[]} />
                 })()}
 
 

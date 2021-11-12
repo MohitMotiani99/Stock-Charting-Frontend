@@ -43,15 +43,17 @@ function ExchangeCard(props) {
 
                         <CardContent>
                             <Grid item xs={12}>
-                                <Typography gutterBottom variant='h4' component='div'>
+                                <Typography gutterBottom variant='h4' component='div' sx={{
+                                    width: '100%'
+                                }}>
                                     {props.exchange.stockExchangeName}
                                 </Typography>
                             </Grid>
                             {
-                                (props.admin) ? <Grid item container>
+                                (props.admin) ? <Grid item xs={12} container>
                                     <Grid item xs={9}></Grid>
                                     <Grid item xs={3} sx={{
-                                        justifyContent: 'center'
+                                        // justifyContent: 'center'
                                     }}>
                                         <Button size='small' color='primary'
                                             onClick={() => {
@@ -59,6 +61,13 @@ function ExchangeCard(props) {
                                                 dispatch(StockPriceActions.setCurrExchange(props.exchange))
                                                 props.setTrigger(true)
                                             }}
+                                        // sx={{
+                                        //     width: '100%',
+                                        //     display: 'flex',
+                                        //     justifyContent: 'right',
+                                        //     alignItems: 'right',
+
+                                        // }}
                                         >
                                             Update
                                         </Button>

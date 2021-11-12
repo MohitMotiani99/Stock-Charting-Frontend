@@ -24,9 +24,9 @@ function SingleCompanyScatter(props) {
                     <ScatterChart width={730} height={250}>
                         <CartesianGrid />
                         <XAxis name="Date" dataKey="localDate" />
-                        <YAxis name="Stock Price" dataKey="price" domain={[Math.floor(props.companyStats.minPrice), Math.ceil(props.companyStats.maxPrice)]} />
+                        <YAxis name="Stock Price" dataKey="price" domain={[Math.floor(props.stats.minPrice), Math.ceil(props.stats.maxPrice)]} />
                         <Tooltip />
-                        <Scatter data={props.companyStats.stockSeries1List} />
+                        <Scatter data={props.stats.stockSeries1List} />
                     </ScatterChart>
                 </ResponsiveContainer>
             </Grid>

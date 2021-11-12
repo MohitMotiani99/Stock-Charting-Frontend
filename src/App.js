@@ -8,6 +8,8 @@ import React from 'react';
 import store from './store/store';
 import Exchanges from './components/stock-exchange/Exchanges';
 import ExchangePage from './components/stock-exchange/ExchangePage';
+import Sectors from './components/sector/Sectors';
+import SectorPage from './components/sector/SectorPage';
 
 function App() {
   return (
@@ -21,6 +23,10 @@ function App() {
 
           <Route exact path="/Exchanges" element={<Exchanges />}></Route>
           <Route path="/exchange/:stockExchangeId" element={<ExchangePage />} ></Route>
+
+          <Route exact path="/Sectors" element={<Sectors />}></Route>
+          <Route exact path="/sector/:sectorId" element={<SectorPage />}></Route>
+
 
         </Routes>
       </BrowserRouter>

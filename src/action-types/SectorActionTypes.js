@@ -1,1 +1,2 @@
 export const SET_SECTOR_LIST = "SET_SECTOR_LIST"
+export const SAVE_SECTOR = "SAVE_SECTOR"

@@ -60,7 +60,17 @@ export function getCurrCompFromCurrComp(payload) {
         })
             .then(res => res.json())
             .then(data => dispatch(setCurrCompany(data)))
-            .catch(err => console.log(err))
+            .catch(err => dispatch(setCurrCompany({
+                companyId: "",
+                companyName: "",
+                turnover: 0,
+                ceo: "",
+                boardOfDirectors: [],
+                listedInStockExchange: false,
+                sector: "",
+                brief: "",
+                stockExchangeCodes: {}
+            })))
     }
 }
 
@@ -71,7 +81,17 @@ export function getCurrComp2FromCurrComp2(payload) {
         })
             .then(res => res.json())
             .then(data => dispatch(setCurrCompany2(data)))
-            .catch(err => console.log(err))
+            .catch(err => dispatch(setCurrCompany2({
+                companyId: "",
+                companyName: "",
+                turnover: 0,
+                ceo: "",
+                boardOfDirectors: [],
+                listedInStockExchange: false,
+                sector: "",
+                brief: "",
+                stockExchangeCodes: {}
+            })))
     }
 }
 export function setStart(payload) {
@@ -114,7 +134,13 @@ export function getCompanyStats(payload) {
         })
             .then(res => res.json())
             .then(data => dispatch(setCompanyStats(data)))
-            .catch(err => console.log('Error UwU'))
+            .catch(err => dispatch(setCompanyStats({
+                stockSeries1List: [],
+                avgPrice: 0.0,
+                maxPrice: 0.0,
+                minPrice: 0.0,
+                growth: 0.0
+            })))
     }
 }
 export function getCompanyStats2(payload) {
@@ -124,7 +150,13 @@ export function getCompanyStats2(payload) {
         })
             .then(res => res.json())
             .then(data => dispatch(setCompanyStats2(data)))
-            .catch(err => console.log('Error UwU'))
+            .catch(err => dispatch(setCompanyStats2({
+                stockSeries1List: [],
+                avgPrice: 0.0,
+                maxPrice: 0.0,
+                minPrice: 0.0,
+                growth: 0.0
+            })))
     }
 }
 
@@ -148,7 +180,13 @@ export function getSEStats(payload) {
         })
             .then(res => res.json())
             .then(data => dispatch(setSEStats(data)))
-            .catch(err => console.log('Error UwU'))
+            .catch(err => dispatch(setSEStats({
+                stockSeries1List: [],
+                avgPrice: 0.0,
+                maxPrice: 0.0,
+                minPrice: 0.0,
+                growth: 0.0
+            })))
     }
 }
 
@@ -159,14 +197,88 @@ export function getSEStats2(payload) {
         })
             .then(res => res.json())
             .then(data => dispatch(setSEStats2(data)))
-            .catch(err => console.log('Error UwU'))
+            .catch(err => dispatch(setSEStats2({
+                stockSeries1List: [],
+                avgPrice: 0.0,
+                maxPrice: 0.0,
+                minPrice: 0.0,
+                growth: 0.0
+            })))
     }
 }
+
+
 export function setSEStatsComb(payload) {
 
     console.log(payload)
     return {
         type: StockPriceActionTypes.SET_SE_STATS_COMB,
         payload
+    }
+}
+export function setCurrSector(payload) {
+    return {
+        type: StockPriceActionTypes.SET_CURR_SECTOR,
+        payload
+    }
+}
+
+export function setSectorStats(payload) {
+    return {
+        type: StockPriceActionTypes.SET_SECTOR_STATS,
+        payload
+    }
+}
+export function setSectorStats2(payload) {
+    return {
+        type: StockPriceActionTypes.SET_SECTOR_STATS2,
+        payload
+    }
+}
+
+export function setCurrSect(payload) {
+    return {
+        type: StockPriceActionTypes.SET_CURR_SECT,
+        payload
+    }
+}
+export function setCurrSect2(payload) {
+    return {
+        type: StockPriceActionTypes.SET_CURR_SECT2,
+        payload
+    }
+}
+
+export function getSectorStats(payload) {
+    return async function (dispatch) {
+        fetch(`http://localhost:8086/prices/sector/stock-variations/${payload.sectorName}/${payload.companyName}?start=${payload.start}&end=${payload.end}`, {
+            method: 'GET'
+        })
+            .then(res => res.json())
+            .then(data => dispatch(setSectorStats(data)))
+            .catch(err => dispatch(setSectorStats({
+                stockSeries1List: [],
+                avgPrice: 0.0,
+                maxPrice: 0.0,
+                minPrice: 0.0,
+                growth: 0.0
+            })))
+    }
+}
+
+export function getSectorStats2(payload) {
+    return async function (dispatch) {
+        fetch(`http://localhost:8086/prices/sector/stock-variations/${payload.sectorName}/${payload.companyName}?start=${payload.start}&end=${payload.end}`, {
+            method: 'GET'
+        })
+            .then(res => res.json())
+            .then(data => dispatch(setSectorStats2(data)))
+            .catch(err => dispatch(setSectorStats2({
+                stockSeries1List: [],
+                avgPrice: 0.0,
+                maxPrice: 0.0,
+                minPrice: 0.0,
+                growth: 0.0
+            })))
     }
 }

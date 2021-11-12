@@ -40,9 +40,9 @@ const initialState = {
         stockExchangeCodes: {}
     },
     currComp: "Apple",
-    currComp2: "",
+    currComp2: "Apple",
     currStock: "NASDAQ",
-    curreStock2: "",
+    curreStock2: "NASDAQ",
     currExchange: {
         stockExchangeId: "",
         stockExchangeName: "",
@@ -79,7 +79,35 @@ const initialState = {
         localDate: "",
         priceA: 0.0,
         priceB: 0.0
-    }]
+    }],
+
+
+    currSector: {
+        sectorId: "",
+        sectorName: "",
+        brief: ""
+    },
+    currSector2: {
+        sectorId: "",
+        sectorName: "",
+        brief: ""
+    },
+    currSect: "Technology",
+    currSect2: "Technology",
+    sectorStats: {
+        stockSeries1List: [],
+        avgPrice: 0.0,
+        maxPrice: 0.0,
+        minPrice: 0.0,
+        growth: 0.0
+    },
+    sectorStats2: {
+        stockSeries1List: [],
+        avgPrice: 0.0,
+        maxPrice: 0.0,
+        minPrice: 0.0,
+        growth: 0.0
+    }
 }
 
 export default function stockPriceReducer(state = initialState, action) {
@@ -197,6 +225,37 @@ export default function stockPriceReducer(state = initialState, action) {
             SEStatsComb: action.payload
         }
     }
+    if (action.type == StockPriceActionTypes.SET_CURR_SECTOR) {
+        return {
+            ...state,
+            currSector: action.payload
+        }
+    }
+    if (action.type == StockPriceActionTypes.SET_SECTOR_STATS) {
+        return {
+            ...state,
+            sectorStats: action.payload
+        }
+    }
+    if (action.type == StockPriceActionTypes.SET_SECTOR_STATS2) {
+        return {
+            ...state,
+            sectorStats2: action.payload
+        }
+    }
+    if (action.type == StockPriceActionTypes.SET_CURR_SECT) {
+        return {
+            ...state,
+            currSect: action.payload
+        }
+    }
+    if (action.type == StockPriceActionTypes.SET_CURR_SECT2) {
+        return {
+            ...state,
+            currSect2: action.payload
+        }
+    }
+
 
     return state
 }

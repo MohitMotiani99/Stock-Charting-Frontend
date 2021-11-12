@@ -72,13 +72,28 @@ function StockPriceChart(props) {
 
     useEffect(() => {
         dispatch(StockExchangeActions.getSEList())
+        dispatch(StockPriceActions.getSEStats({
+            stockExchangeName: props.currStock,
+            start: props.start,
+            end: props.end
+        }))
+        dispatch(StockPriceActions.getSEStats2({
+            stockExchangeName: props.currStock2,
+            start: props.start,
+            end: props.end
+        }))
+
 
     }, [])
 
-    const drawGraph = (a, b, c) => {
+    let [showGraph, setShowGraph] = useState(false)
+    let [finArr, setFinArr] = useState([])
+
+    const drawGraph = (a, a2, b, c) => {
         setDisp('flex')
         console.log(props)
         dispatch(StockPriceActions.setCurrStock(a))
+        dispatch(StockPriceActions.setCurrStock2(a2))
         dispatch(StockPriceActions.setStart(b))
         dispatch(StockPriceActions.setEnd(c))
         dispatch(StockPriceActions.getSEStats({
@@ -86,7 +101,26 @@ function StockPriceChart(props) {
             start: b,
             end: c
         }))
+        dispatch(StockPriceActions.getSEStats2({
+            stockExchangeName: a2,
+            start: b,
+            end: c
+        }))
 
+
+        let finarr = []
+        for (let i = 0; i < props.SEStats.length; i++) {
+            finarr.push({
+                localDate: props.SEStats[i].localDate,
+                priceA: props.SEStats[i].price,
+                priceB: props.SEStats2[i].price
+            })
+        }
+
+
+
+        dispatch(StockPriceActions.setSEStatsComb(finarr))
+        setShowGraph(true)
     }
 
     const drawGraph2 = (a, b, c) => {
@@ -103,6 +137,9 @@ function StockPriceChart(props) {
 
     }
 
+    let [col1, setCol1] = useState("green")
+    let [col2, setCol2] = useState("green")
+
     return (
         <Grid container sx={{ pt: 7 }}>
             <Grid item xs={12}>
@@ -113,7 +150,7 @@ function StockPriceChart(props) {
                 </Typography>
             </Grid>
             <Divider />
-            <Grid item xs={4}>
+            <Grid item xs={2}>
                 <InputLabel id='stock-select' sx={{
                 }}>Stock Exchange</InputLabel>
                 <Select
@@ -122,10 +159,10 @@ function StockPriceChart(props) {
                     value={stockName}
                     onChange={handleStockNameChange}
                     sx={{
-                        width: '80%',
+                        width: '95%',
                     }}
                     placeholder="None"
-                    defaultValue="BSE"
+                    defaultValue={stockName}
                 >
                     <MenuItem value=""><em>None</em></MenuItem>
                     {
@@ -217,15 +254,25 @@ function StockPriceChart(props) {
                 </Select>
 
             </Grid>
-            <Grid item xs={12}>
-                <Button variant='contained'
+            <Grid item xs={2}>
+                <InputLabel id='col1-select' sx={{
+                }}>Color</InputLabel>
+                <Select
+                    labelId="col1-select"
+                    id="demo-simple-select"
+                    value={col1}
+                    onChange={(e) => setCol1(e.target.value)}
                     sx={{
-                        width: '100%'
+                        width: '80%',
                     }}
-                    onClick={() => drawGraph(stockName, startDate, endDate)}
+                    placeholder="None"
+                    defaultValue="green"
                 >
-                    Graph
-                </Button>
+                    <MenuItem value="green">Green</MenuItem>
+                    <MenuItem value="blue">Blue</MenuItem>
+                    <MenuItem value="red">Red</MenuItem>
+                </Select>
+
             </Grid>
 
 
@@ -237,7 +284,7 @@ function StockPriceChart(props) {
 
 
             <Divider />
-            <Grid item xs={4}>
+            <Grid item xs={2}>
                 <InputLabel id='stock-select' sx={{
                 }}>Stock Exchange</InputLabel>
                 <Select
@@ -246,7 +293,7 @@ function StockPriceChart(props) {
                     value={stockName2}
                     onChange={handleStockName2Change}
                     sx={{
-                        width: '80%',
+                        width: '95%',
                     }}
                     placeholder="None"
                 >
@@ -339,12 +386,35 @@ function StockPriceChart(props) {
                 </Select>
 
             </Grid>
+            <Grid item xs={2}>
+                <InputLabel id='col2-select' sx={{
+                }}>Color</InputLabel>
+                <Select
+                    labelId="col2-select"
+                    id="demo-simple-select"
+                    value={col2}
+                    onChange={(e) => setCol2(e.target.value)}
+                    sx={{
+                        width: '80%',
+                    }}
+                    placeholder="None"
+                    defaultValue="green"
+                >
+                    <MenuItem value="green">Green</MenuItem>
+                    <MenuItem value="blue">Blue</MenuItem>
+                    <MenuItem value="red">Red</MenuItem>
+                </Select>
+
+            </Grid>
+
+
+
             <Grid item xs={12}>
                 <Button variant='contained'
                     sx={{
                         width: '100%'
                     }}
-                    onClick={() => drawGraph2(stockName2, startDate, endDate)}
+                    onClick={() => drawGraph(stockName, stockName2, startDate, endDate)}
                 >
                     Graph
                 </Button>
@@ -356,16 +426,38 @@ function StockPriceChart(props) {
                 display: { disp }
             }}>
                 {(() => {
+
                     if (chartType == "Line")
-                        return <SingleCompany stats={props.SEStats} stats2={props.SEStats2}></SingleCompany>
+                        return <SingleCompany stats={props.SEStats} stats2={props.SEStats2} type={"1"} col1={col1} col2={col2}></SingleCompany>
                     else if (chartType == "Bar")
-                        return <SingleCompanyBar stats={props.SEStats} stats2={props.SEStats2}></SingleCompanyBar>
+                        return <SingleCompanyBar stats={props.SEStats} stats2={props.SEStats2} type={"1"} col1={col1} col2={col2}></SingleCompanyBar>
                     else if (chartType == "Scatter")
-                        return <SingleCompanyScatter stats={props.SEStats} stats2={props.SEStats2} />
+                        return <SingleCompanyScatter stats={props.SEStats} stats2={props.SEStats2} type={"1"} col1={col1} col2={col2} />
+
+
                 })()}
 
 
             </Grid>
+            <Grid item xs={12} display={disp} sx={{
+                pt: 0,
+                display: { disp }
+            }}>
+                {(() => {
+
+                    if (chartType == "Line")
+                        return <SingleCompany stats={props.SEStats} stats2={props.SEStats2} type={"2"} col1={col1} col2={col2}></SingleCompany>
+                    else if (chartType == "Bar")
+                        return <SingleCompanyBar stats={props.SEStats} stats2={props.SEStats2} type={"2"} col1={col1} col2={col2}></SingleCompanyBar>
+                    else if (chartType == "Scatter")
+                        return <SingleCompanyScatter stats={props.SEStats} stats2={props.SEStats2} type={"2"} col1={col1} col2={col2} />
+
+
+                })()}
+
+
+            </Grid>
+
 
         </Grid>
     )
@@ -382,7 +474,8 @@ function mapStateToProps(state) {
         currStock2: state.stockPriceReducer.currStock2,
         SEStats: state.stockPriceReducer.SEStats,
         SEStats2: state.stockPriceReducer.SEStats2,
-        SEList: state.stockExchangeReducer.SEList
+        SEList: state.stockExchangeReducer.SEList,
+        SEStatsComb: state.stockPriceReducer.SEStatsComb
     }
 }
 

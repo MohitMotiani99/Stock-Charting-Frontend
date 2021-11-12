@@ -21,12 +21,12 @@ function SingleCompanyBar(props) {
         <Grid container sx={{ pt: 5, }}>
             <Grid item xs={12} height="400px">
                 <ResponsiveContainer width="100%" aspect={3}>
-                    <BarChart data={props.stats.stockSeries1List}>
+                    <BarChart data={(props.type == "1") ? props.stats.stockSeries1List : props.stats2.stockSeries1List}>
                         <CartesianGrid />
                         <XAxis dataKey="localDate" />
-                        <YAxis type="number" domain={[Math.floor(props.stats.minPrice), Math.ceil(props.stats.maxPrice)]} />
+                        <YAxis type="number" domain={[Math.floor(Math.min(props.stats.minPrice, props.stats2.minPrice)), Math.ceil(Math.max(props.stats.maxPrice, props.stats2.maxPrice))]} />
                         <Tooltip />
-                        <Bar dataKey="price" />
+                        <Bar dataKey="price" stroke={(props.type == "1") ? props.col1 : props.col2} />
                     </BarChart>
 
                 </ResponsiveContainer>

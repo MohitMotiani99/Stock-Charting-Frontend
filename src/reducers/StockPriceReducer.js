@@ -28,8 +28,21 @@ const initialState = {
         brief: "",
         stockExchangeCodes: {}
     },
+    currCompany2: {
+        companyId: "",
+        companyName: "",
+        turnover: 0,
+        ceo: "",
+        boardOfDirectors: [],
+        listedInStockExchange: false,
+        sector: "",
+        brief: "",
+        stockExchangeCodes: {}
+    },
+    currComp: "Apple",
+    currComp2: "",
     currStock: "NASDAQ",
-    curreStock2: "NASDAQ",
+    curreStock2: "",
     currExchange: {
         stockExchangeId: "",
         stockExchangeName: "",
@@ -61,7 +74,12 @@ const initialState = {
     start: subMonths(new Date(), 6),
     end: new Date(),
     start2: subMonths(new Date(), 6),
-    end2: new Date()
+    end2: new Date(),
+    SEStatsComb: [{
+        localDate: "",
+        priceA: 0.0,
+        priceB: 0.0
+    }]
 }
 
 export default function stockPriceReducer(state = initialState, action) {
@@ -84,6 +102,13 @@ export default function stockPriceReducer(state = initialState, action) {
             currCompany: action.payload
         }
     }
+    else if (action.type === StockPriceActionTypes.SET_CURR_COMPANY2) {
+
+        return {
+            ...state,
+            currCompany2: action.payload
+        }
+    }
     else if (action.type === StockPriceActionTypes.SET_CURR_STOCK) {
         return {
             ...state,
@@ -94,6 +119,18 @@ export default function stockPriceReducer(state = initialState, action) {
         return {
             ...state,
             currStock2: action.payload
+        }
+    }
+    else if (action.type === StockPriceActionTypes.SET_CURR_COMP) {
+        return {
+            ...state,
+            currComp: action.payload
+        }
+    }
+    else if (action.type === StockPriceActionTypes.SET_CURR_COMP2) {
+        return {
+            ...state,
+            currComp2: action.payload
         }
     }
     else if (action.type === StockPriceActionTypes.SET_START) {
@@ -152,7 +189,14 @@ export default function stockPriceReducer(state = initialState, action) {
             SEStats2: action.payload
         }
     }
+    else if (action.type === StockPriceActionTypes.SET_SE_STATS_COMB) {
 
+        console.log(action.payload)
+        return {
+            ...state,
+            SEStatsComb: action.payload
+        }
+    }
 
     return state
 }

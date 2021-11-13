@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import { Grid } from '@mui/material';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import * as HomeActions from '../../actions/HomeActions'
+import * as UserActions from '../../actions/UserActions'
 
 
 const getButtons = (LOGGED_IN) => {
@@ -42,6 +44,16 @@ const getButtons = (LOGGED_IN) => {
         </Grid>
 }
 
+
+let emptyUser = {
+    userId: "",
+    username: "",
+    password: "",
+    userType: "",
+    email: "",
+    mobile: "",
+    confirmed: true
+}
 
 const drawerWidth = 240
 
@@ -85,7 +97,14 @@ function PageHeader(props) {
                                     </Button>
                                 </Grid>
                                 <Grid item xs={2} >
-                                    <Button color="inherit">
+                                    <Button color="inherit"
+                                        onClick={() => {
+                                            dispatch(HomeActions.setLoggedUser(emptyUser))
+                                            dispatch(UserActions.setCurrUser(emptyUser))
+                                            dispatch(HomeActions.setLoggedIn(false))
+                                            navigate("/")
+                                        }}
+                                    >
                                         <Typography variant="h6" component="div">
                                             Logout
                                         </Typography>

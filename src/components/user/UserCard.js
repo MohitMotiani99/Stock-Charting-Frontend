@@ -23,8 +23,8 @@ function UserCard(props) {
     let [popUp, setPopUp] = useState(false)
 
     useEffect(() => {
-        dispatch(HomeActions.setAdmin(false))
-        dispatch(HomeActions.setLoggedIn(false))
+        // dispatch(HomeActions.setAdmin(false))
+        // dispatch(HomeActions.setLoggedIn(false))
     })
     return (
 
@@ -54,7 +54,7 @@ function UserCard(props) {
                                 </Typography>
                             </Grid>
                             {
-                                (props.loggedIn) ? <Grid item container>
+                                (props.loggedIn && props.loggedUser.userId == props.user.userId) ? <Grid item container>
                                     <Grid item xs={9}></Grid>
                                     <Grid item xs={3} sx={{
                                         justifyContent: 'center'
@@ -62,7 +62,7 @@ function UserCard(props) {
                                         <Button size='small' color='primary'
                                             onClick={() => {
                                                 props.setType("update")
-                                                dispatch(StockPriceActions.setCurrUser(props.user))
+                                                dispatch(UserActions.setCurrUser(props.user))
                                                 props.setTrigger(true)
                                             }}
                                         >
@@ -79,7 +79,7 @@ function UserCard(props) {
                         <Grid item xs={12}>
                             <Button size='small' color='primary'
                                 onClick={async () => {
-                                    await dispatch(StockPriceActions.setCurrUser(props.user))
+                                    await dispatch(UserActions.setCurrUser(props.user))
                                     navigate(`/user/${props.user.userId}`, {
                                         state: {
                                             user: props.user
@@ -95,6 +95,7 @@ function UserCard(props) {
                                 <Button size='small' color='primary'
                                     onClick={() => {
                                         dispatch(UserActions.deleteUser(props.user.userId))
+                                        navigate("/Users")
                                     }}
                                 >
                                     Delete
@@ -112,7 +113,7 @@ function UserCard(props) {
 }
 function mapStateToProps(state) {
     return {
-        currUser: state.stockPriceReducer.currUser,
+        currUser: state.userReducer.currUser,
         admin: state.homeReducer.admin,
         loggedIn: state.homeReducer.loggedIn,
         loggedUser: state.homeReducer.loggedUser

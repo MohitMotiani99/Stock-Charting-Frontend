@@ -1,5 +1,5 @@
 import { Button, Grid, IconButton, Paper, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-grid-system";
 import { connect, useDispatch } from "react-redux";
 import * as StockPriceActions from '../../actions/StockPriceActions'
@@ -7,6 +7,7 @@ import * as UserActions from '../../actions/UserActions'
 import * as HomeActions from '../../actions/HomeActions'
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import SaveUser from './UserModeComponents/SaveUser'
 
 import { userpp } from './UserPP'
 
@@ -23,13 +24,20 @@ function UserMemo(props) {
 
     const dispatch = useDispatch()
 
+    let [popUp, setPopUp] = useState(false)
+    let [type, setType] = useState("")
+
+
     useEffect(() => {
-        dispatch(StockPriceActions.setCurrUser(props.user))
-        dispatch(HomeActions.setLoggedIn(true))
+        dispatch(UserActions.setCurrUser(props.user))
+        //dispatch(HomeActions.setLoggedIn(true))
     }, [])
 
     return (
-        <Container fluid>
+
+        (!popUp) ? <Container fluid>
+            {console.log(props.user)}
+
             <Row xs={12}>
                 <Col xs={1}>
                     <img src={userpp[Math.floor(Math.random() * 4)]} width='70px' height='70px'></img>
@@ -49,9 +57,9 @@ function UserMemo(props) {
                         (props.loggedIn && props.loggedUser.userId == props.user.userId) ?
                             <Button color='primary' variant="contained" size="large"
                                 onClick={() => {
-                                    props.setType("update")
-                                    dispatch(StockPriceActions.setCurrUser(props.user))
-                                    props.setTrigger(true)
+                                    setType("update")
+                                    dispatch(UserActions.setCurrUser(props.user))
+                                    setPopUp(true)
                                 }}
                             >
                                 Update
@@ -111,12 +119,12 @@ function UserMemo(props) {
             </Paper>
 
 
-        </Container>
+        </Container> : <SaveUser trigger={popUp} setTrigger={setPopUp} ops={type} setOps={setType}></SaveUser>
     );
 }
 function mapStateToProps(state) {
     return {
-        currUser: state.stockPriceReducer.currUser,
+        currUser: state.userReducer.currUser,
         admin: state.homeReducer.admin,
         loggedIn: state.homeReducer.loggedIn,
         loggedUser: state.homeReducer.loggedUser

@@ -1,4 +1,5 @@
 import * as UserActionTypes from '../action-types/UserActionTypes'
+import { setLoggedIn, setLoggedUser } from './HomeActions'
 
 export function setUserList(payload) {
     return {
@@ -44,14 +45,26 @@ export function deleteUser(payload) {
         fetch(`http://localhost:8085/users/delete?userId=${payload}`, {
             method: 'DELETE',
         })
-            .then(() => dispatch(getUserList()))
+            .then(() => {
+                dispatch(getUserList())
+                dispatch(setLoggedIn(false))
+                dispatch(setCurrUser({
+                    userId: "",
+                    username: "",
+                    password: "",
+                    userType: "",
+                    email: "",
+                    mobile: "",
+                    confirmed: true
+                }))
+            })
             .catch(err => console.log(err))
     }
 }
 
 export function updateUser(payload) {
     return async function (dispatch) {
-        const res = fetch(`http://localhost:8085/users/update?userId=${payload.userId}`, {
+        fetch(`http://localhost:8085/users/update?userId=${payload.userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,10 +73,21 @@ export function updateUser(payload) {
         })
             .then(res => res.text())
             .then((data) => {
-                console.log("Saved")
-                return data === "" ? {} : dispatch(getUserList())
+                return data === "" ? {} : async () => {
+                    await dispatch(getUserList())
+                    await dispatch(setCurrUser(data))
+                    await dispatch(setLoggedUser(data))
+                }
             })
             .catch(err => console.log(err))
 
     }
 }
+
+export function setCurrUser(payload) {
+    return {
+        type: UserActionTypes.SET_CURR_USER,
+        payload
+    }
+}
+

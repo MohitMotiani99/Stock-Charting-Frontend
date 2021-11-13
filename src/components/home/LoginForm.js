@@ -1,10 +1,10 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PageHeader from "../home/PageHeader";
 import SideMenu from "../home/SideMenu";
 import { connect, useDispatch } from "react-redux";
 import * as HomeActions from '../../actions/HomeActions'
-import * as StockPriceActions from '../../actions/StockPriceActions'
+import * as UserActions from '../../actions/UserActions'
 
 import loginUser from '../../static/loginUser.png'
 import { Navigate, useNavigate } from "react-router";
@@ -23,6 +23,8 @@ function LoginForm(props) {
 
     let [name, setName] = useState("")
     let [pass, setPass] = useState("")
+
+    let [msg, setMsg] = useState("none")
 
     return (
         <Grid container sx={{ pt: 10 }}>
@@ -62,21 +64,30 @@ function LoginForm(props) {
 
                 <Grid item xs={12} sx={style}>
                     <Button variant='contained' color='primary'
-                        onClick={() => {
-                            dispatch(HomeActions.setLoggedIn(true))
-                            dispatch(HomeActions.getLoggedUser({
+                        onClick={async () => {
+                            await dispatch(HomeActions.getLoggedUser({
                                 username: name,
                                 password: pass
                             }))
                             if (props.loggedUser.userId != "") {
-                                dispatch(StockPriceActions.setCurrUser(props.loggedUser))
-                                navigate('/')
+                                setMsg('none')
+                                dispatch(HomeActions.setLoggedIn(true))
+                                dispatch(UserActions.setCurrUser(props.loggedUser))
+                                navigate("/")
+                            }
+                            else {
+                                setMsg('inline')
                             }
 
                         }}
                     >
                         SignIn
                     </Button>
+                </Grid>
+                <Grid item xs={12} sx={style}>
+                    <Paper sx={{ backgroundColor: 'yellowgreen', display: msg }}>
+                        Invalid User Name or Password
+                    </Paper>
                 </Grid>
 
             </Grid>

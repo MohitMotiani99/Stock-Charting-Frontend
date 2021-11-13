@@ -122,7 +122,7 @@ function SaveUser(props) {
                     if (props.ops == "save")
                         dispatch(UserActions.saveUser(user))
                     else if (props.ops == "update")
-                        dispatch(UserActions.saveUser(user))
+                        dispatch(UserActions.updateUser(user))
                     props.setTrigger(false)
                 }}
                     variant='contained'>
@@ -146,7 +146,7 @@ function SaveUser(props) {
 
 function mapStateToProps(state) {
     return {
-        currUser: state.stockPriceReducer.currUser,
+        currUser: state.userReducer.currUser,
     }
 }
 

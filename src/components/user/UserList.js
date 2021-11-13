@@ -80,7 +80,7 @@ function UserList(props) {
                             <Button variant='contained' color='success' fullWidth
                                 onClick={() => {
                                     setOps("save")
-                                    dispatch(StockPriceActions.setCurrUser(newUser))
+                                    dispatch(UserActions.setCurrUser(newUser))
                                     setPopUp(true)
                                 }}
                             >

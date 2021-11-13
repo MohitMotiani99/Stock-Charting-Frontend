@@ -109,7 +109,6 @@ const initialState = {
         growth: 0.0
     },
 
-
 }
 
 export default function stockPriceReducer(state = initialState, action) {
@@ -255,12 +254,6 @@ export default function stockPriceReducer(state = initialState, action) {
         return {
             ...state,
             currSect2: action.payload
-        }
-    }
-    else if (action.type == StockPriceActionTypes.SET_CURR_USER) {
-        return {
-            ...state,
-            currUser: action.payload
         }
     }
 

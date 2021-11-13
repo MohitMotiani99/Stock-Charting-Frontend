@@ -10,6 +10,9 @@ import Exchanges from './components/stock-exchange/Exchanges';
 import ExchangePage from './components/stock-exchange/ExchangePage';
 import Sectors from './components/sector/Sectors';
 import SectorPage from './components/sector/SectorPage';
+import Users from './components/user/Users';
+import UserPage from './components/user/UserPage';
+import LoginPage from './components/home/LoginPage';
 
 function App() {
   return (
@@ -27,6 +30,10 @@ function App() {
           <Route exact path="/Sectors" element={<Sectors />}></Route>
           <Route exact path="/sector/:sectorId" element={<SectorPage />}></Route>
 
+          <Route exact path="/Users" element={<Users />}></Route>
+          <Route exact path="/user/:userId" element={<UserPage />}></Route>
+
+          <Route exact path="/Login" element={<LoginPage />}></Route>
 
         </Routes>
       </BrowserRouter>

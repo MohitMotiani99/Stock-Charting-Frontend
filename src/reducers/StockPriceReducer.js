@@ -107,7 +107,9 @@ const initialState = {
         maxPrice: 0.0,
         minPrice: 0.0,
         growth: 0.0
-    }
+    },
+
+
 }
 
 export default function stockPriceReducer(state = initialState, action) {
@@ -225,37 +227,42 @@ export default function stockPriceReducer(state = initialState, action) {
             SEStatsComb: action.payload
         }
     }
-    if (action.type == StockPriceActionTypes.SET_CURR_SECTOR) {
+    else if (action.type == StockPriceActionTypes.SET_CURR_SECTOR) {
         return {
             ...state,
             currSector: action.payload
         }
     }
-    if (action.type == StockPriceActionTypes.SET_SECTOR_STATS) {
+    else if (action.type == StockPriceActionTypes.SET_SECTOR_STATS) {
         return {
             ...state,
             sectorStats: action.payload
         }
     }
-    if (action.type == StockPriceActionTypes.SET_SECTOR_STATS2) {
+    else if (action.type == StockPriceActionTypes.SET_SECTOR_STATS2) {
         return {
             ...state,
             sectorStats2: action.payload
         }
     }
-    if (action.type == StockPriceActionTypes.SET_CURR_SECT) {
+    else if (action.type == StockPriceActionTypes.SET_CURR_SECT) {
         return {
             ...state,
             currSect: action.payload
         }
     }
-    if (action.type == StockPriceActionTypes.SET_CURR_SECT2) {
+    else if (action.type == StockPriceActionTypes.SET_CURR_SECT2) {
         return {
             ...state,
             currSect2: action.payload
         }
     }
-
+    else if (action.type == StockPriceActionTypes.SET_CURR_USER) {
+        return {
+            ...state,
+            currUser: action.payload
+        }
+    }
 
     return state
 }

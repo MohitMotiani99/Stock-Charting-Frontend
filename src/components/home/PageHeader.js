@@ -4,8 +4,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Grid } from '@mui/material';
+import { connect, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
-var LOGGED_IN = false
 
 const getButtons = (LOGGED_IN) => {
     if (LOGGED_IN) {
@@ -44,7 +45,11 @@ const getButtons = (LOGGED_IN) => {
 
 const drawerWidth = 240
 
-export default function PageHeader(props) {
+function PageHeader(props) {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     return (
         <Grid item container>
             <Grid container>
@@ -63,7 +68,43 @@ export default function PageHeader(props) {
                             </Typography>
                         </Grid>
 
-                        {getButtons(LOGGED_IN)}
+                        {
+                            (props.loggedIn) ? <Grid container>
+                                <Grid item xs={7}></Grid>
+                                <Grid item xs={2} >
+                                    <Button color="inherit" onClick={() => {
+                                        navigate(`/user/${props.loggedUser.userId}`, {
+                                            state: {
+                                                user: props.loggedUser
+                                            }
+                                        })
+                                    }}>
+                                        <Typography variant="h6" component="div">
+                                            Profile
+                                        </Typography>
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={2} >
+                                    <Button color="inherit">
+                                        <Typography variant="h6" component="div">
+                                            Logout
+                                        </Typography>
+                                    </Button>
+                                </Grid>
+
+                            </Grid> : <Grid container>
+                                <Grid item xs={9}></Grid>
+                                <Grid item xs={2}>
+                                    <Button color="inherit"
+                                        onClick={() => navigate('/Login')}
+                                    >
+                                        <Typography variant="h6" component="div">
+                                            Login
+                                        </Typography>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        }
 
                     </Toolbar>
                 </AppBar>
@@ -71,3 +112,13 @@ export default function PageHeader(props) {
         </Grid>
     );
 }
+
+function mapStateToProps(state) {
+    return {
+        loggedIn: state.homeReducer.loggedIn,
+        admin: state.homeReducer.admin,
+        loggedUser: state.homeReducer.loggedUser
+    }
+}
+
+export default connect(mapStateToProps)(PageHeader)

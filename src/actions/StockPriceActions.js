@@ -282,3 +282,10 @@ export function getSectorStats2(payload) {
             })))
     }
 }
+
+export function setCurrUser(payload) {
+    return {
+        type: StockPriceActionTypes.SET_CURR_USER,
+        payload
+    }
+}

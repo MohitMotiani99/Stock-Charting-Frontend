@@ -6,6 +6,7 @@ import sectorReducer from "./SectorReducer";
 import stockExchangeReducer from "./StockExchangeReducer"
 import userReducer from "./UserReducer";
 import ipoReducer from "./IpoReducer";
+import uploadReducer from "./UploadReducer";
 
 export default combineReducers({
     companyReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     sectorReducer,
     stockExchangeReducer,
     userReducer,
-    ipoReducer
+    ipoReducer,
+    uploadReducer
 })

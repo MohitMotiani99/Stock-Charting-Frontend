@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid, IconButton, MenuItem, Select } from "@mui/material";
+import { Button, Grid, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import { connect, useDispatch } from "react-redux";
 import * as IpoActions from '../../actions/IpoActions'
 import AppBar from '@mui/material/AppBar';
@@ -84,6 +84,12 @@ function IpoList(props) {
     return (
 
         (!popUp) ? <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
+            <Grid item xs={12}>
+                <Typography variant='h3' gutterBottom>
+                    Initial Public Offerings
+                </Typography>
+            </Grid>
+
 
             <Grid item container sx={{ pt: 20 }}>
                 <AppBar position='relative'>
@@ -194,7 +200,7 @@ function IpoList(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {(ipos.length == 0 || (stockName == "" && compName == "") ? props.ipoList : ipos).map((row) => (
+                        {((stockName == "" && compName == "") ? props.ipoList : ipos).map((row) => (
                             <StyledTableRow key={row.ipoId}>
                                 <StyledTableCell component="th" scope="row">
                                     {row.stockExchangeName}

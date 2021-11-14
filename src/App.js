@@ -14,6 +14,7 @@ import Users from './components/user/Users';
 import UserPage from './components/user/UserPage';
 import LoginPage from './components/home/LoginPage';
 import Ipos from './components/ipo/Ipos';
+import Uploads from './components/upload/Uploads';
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
           <Route exact path="/Login" element={<LoginPage />}></Route>
 
           <Route exact path="/IPOs" element={<Ipos />}></Route>
+
+          <Route exact path="/Upload" element={<Uploads />}></Route>
 
         </Routes>
       </BrowserRouter>

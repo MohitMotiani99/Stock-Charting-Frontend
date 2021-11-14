@@ -90,13 +90,11 @@ function StockPriceChart(props) {
             sectorName: props.currSect,
             start: props.start,
             end: props.end,
-            companyName: props.currComp
         }))
         dispatch(StockPriceActions.getSectorStats2({
             sectorName: props.currSect2,
             start: startDate,
             end: endDate,
-            companyName: props.currComp2
         }))
 
     }, [])
@@ -129,13 +127,11 @@ function StockPriceChart(props) {
             sectorName: props.currSect,
             start: startDate,
             end: endDate,
-            companyName: compName
         }))
         dispatch(StockPriceActions.getSectorStats2({
             sectorName: props.currSect2,
             start: startDate,
             end: endDate,
-            companyName: props.currComp2
         }))
 
     }
@@ -171,28 +167,6 @@ function StockPriceChart(props) {
                         (props.sectorList).map((obj) => {
                             return <MenuItem value={obj.sectorName}>{obj.sectorName}</MenuItem>
                         })
-                    }
-                </Select>
-            </Grid>
-            <Grid item xs={2}>
-                <InputLabel id='company-select' sx={{
-                }}>Company</InputLabel>
-                <Select
-                    labelId="stock-select"
-                    id="demo-simple-select"
-                    value={compName}
-                    onChange={handleCompNameChange}
-                    sx={{
-                        width: '95%',
-                    }}
-                    placeholder="None"
-                >
-                    <MenuItem value=""><em>None</em></MenuItem>
-                    {
-                        (props.companyList).filter(c => c.sector === sectorName)
-                            .map((obj) => {
-                                return <MenuItem value={obj.companyName}>{obj.companyName}</MenuItem>
-                            })
                     }
                 </Select>
             </Grid>
@@ -300,7 +274,7 @@ function StockPriceChart(props) {
                 </Select>
 
             </Grid>
-            <Grid item xs={10}></Grid>
+            {/* <Grid item xs={10}></Grid> */}
 
 
 
@@ -326,28 +300,6 @@ function StockPriceChart(props) {
                         (props.sectorList).map((obj) => {
                             return <MenuItem value={obj.sectorName}>{obj.sectorName}</MenuItem>
                         })
-                    }
-                </Select>
-            </Grid>
-            <Grid item xs={2}>
-                <InputLabel id='company-select' sx={{
-                }}>Company</InputLabel>
-                <Select
-                    labelId="stock-select"
-                    id="demo-simple-select"
-                    value={compName2}
-                    onChange={handleCompName2Change}
-                    sx={{
-                        width: '95%',
-                    }}
-                    placeholder="None"
-                >
-                    <MenuItem value=""><em>None</em></MenuItem>
-                    {
-                        (props.companyList).filter(c => c.sector === sectorName2)
-                            .map((obj) => {
-                                return <MenuItem value={obj.companyName}>{obj.companyName}</MenuItem>
-                            })
                     }
                 </Select>
             </Grid>

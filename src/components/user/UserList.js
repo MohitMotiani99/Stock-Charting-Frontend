@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
-import { Button, Grid, IconButton } from "@mui/material";
+import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { connect, useDispatch } from "react-redux";
 import * as UserActions from '../../actions/UserActions'
 import AppBar from '@mui/material/AppBar';
@@ -45,6 +45,12 @@ function UserList(props) {
     return (
 
         (!popUp) ? <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
+            <Grid item xs={12}>
+                <Typography variant='h3' gutterBottom>
+                    Users
+                </Typography>
+            </Grid>
+
 
             <Grid item container sx={{ pt: 20 }}>
                 <AppBar position='relative'>
@@ -87,7 +93,7 @@ function UserList(props) {
                                 <IconButton color='primary'>
                                     <AddIcon></AddIcon>
                                 </IconButton>
-                                Add User
+                                SignUp
                             </Button>
                         </Grid>
 

@@ -1,0 +1,1 @@
+export const SET_HIST_PRICE_LIST = "SET_HIST_PRICE_LIST"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CompanyCard from "./CompanyCard";
-import { Button, Grid, IconButton } from "@mui/material";
+import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { connect, useDispatch } from "react-redux";
 import * as CompanyActions from '../../actions/CompanyActions'
 import AppBar from '@mui/material/AppBar';
@@ -46,6 +46,12 @@ function CompanyList(props) {
     return (
 
         (!popUp) ? <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
+            <Grid item xs={12}>
+                <Typography variant='h3' gutterBottom>
+                    Companies
+                </Typography>
+            </Grid>
+
 
             <Grid item container sx={{ pt: 20 }}>
                 <AppBar position='relative'>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SectorCard from "./SectorCard";
-import { Button, Grid, IconButton } from "@mui/material";
+import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { connect, useDispatch } from "react-redux";
 import * as SectorActions from '../../actions/SectorActions'
 import AppBar from '@mui/material/AppBar';
@@ -40,6 +40,12 @@ function SectorList(props) {
     return (
 
         (!popUp) ? <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
+            <Grid item xs={12}>
+                <Typography variant='h3' gutterBottom>
+                    Sectors
+                </Typography>
+            </Grid>
+
 
             <Grid item container sx={{ pt: 20 }}>
                 <AppBar position='relative'>

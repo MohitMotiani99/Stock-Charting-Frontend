@@ -5,6 +5,8 @@ import company from '../../static/company.jpg'
 import stock_exchange from '../../static/stock_exchange.jpg'
 import sector from '../../static/sector.png'
 import user from '../../static/user.png'
+import ipo from '../../static/ipo.jpg'
+import upload from '../../static/upload.jpg'
 
 
 export default function Features(props) {
@@ -26,6 +28,15 @@ export default function Features(props) {
                 <DisplayCard name="Users" brief="View All the Registerd Users and Click on them to explore each of them in
                                         detail" image={user} next='/users'></DisplayCard>
             </Grid>
+            <Grid item md={3}>
+                <DisplayCard name="IPOs" brief="View All the Planned IPOs and dilter them according to Stock Exchange & Company Name"
+                    image={ipo} next='/ipos'></DisplayCard>
+            </Grid>
+            <Grid item md={3.5}>
+                <DisplayCard name="Upload Stock Sheets" brief="Upload Multiple stock price sheets of companies in specific exchanges to help to help plot them"
+                    image={upload} next='/upload'></DisplayCard>
+            </Grid>
+
         </Grid>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ExchangeCard from "./ExchangeCard";
-import { Button, Grid, IconButton } from "@mui/material";
+import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { connect, useDispatch } from "react-redux";
 import * as StockExchangeActions from '../../actions/StockExchangeActions'
 import AppBar from '@mui/material/AppBar';
@@ -49,6 +49,13 @@ function ExchangeList(props) {
     return (
 
         (!popUp) ? <Grid container sx={{ pt: 15, pl: 0 }} spacing={3}>
+
+            <Grid item xs={12}>
+                <Typography variant='h3' gutterBottom>
+                    Stock Exchanges
+                </Typography>
+            </Grid>
+
 
             <Grid item container sx={{ pt: 20 }}>
                 <AppBar position='relative'>

@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox } from "@mui/material";
+import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -25,6 +25,7 @@ function SaveCompany(props) {
     }
 
 
+    let [codes, setCodes] = useState(JSON.stringify(props.currCompany.stockExchangeCodes))
     let [comp, setComp] = useState(props.currCompany)
 
 
@@ -36,7 +37,8 @@ function SaveCompany(props) {
         dispatch(StockExchangeActions.getSEList())
     }, [])
 
-    let companyCodeEntry = (key, value) => {
+    let CompanyCodeEntry = (key, value) => {
+        console.log(key)
         return <Grid container>
             <Grid item xs={6}>
                 <TextField
@@ -45,15 +47,19 @@ function SaveCompany(props) {
                     id="outlined-required"
                     value={key}
                 />
+            </Grid>
+            <Grid item xs={6}>
                 <TextField
                     fullWidth
                     id="outlined-requied"
+                    disabled
                     value={value}
-                    onChange={(e) => handleFieldChange("stockExchangeCodes", { key: key, value: value })}
+
                 />
             </Grid>
+        </Grid>
 
-        </Grid >
+
     }
 
     console.log(props.sectorList)
@@ -104,11 +110,10 @@ function SaveCompany(props) {
             })
         }
         else if (field == "stockExchangeCodes") {
-            let stockCodes = comp.stockExchangeCodes
-            stockCodes[value.key] = value.value
+
             setComp({
                 ...comp,
-                stockExchangeCodes: stockCodes
+                stockExchangeCodes: JSON.parse(value)
             })
         }
     }
@@ -175,13 +180,13 @@ function SaveCompany(props) {
                 />
             </Grid>
             <Grid item xs={12}>
-                <TextField
+                <Select
                     fullWidth
                     required
                     id="outlined-select"
                     select
-                    value={comp.sectorName}
-                    onChange={(e) => handleFieldChange("sectorName", e.target.value)}
+                    value={comp.sector}
+                    onChange={(e) => handleFieldChange("sector", e.target.value)}
                     helperText="Select a Sector"
                     label="Sector"
                     placeholder="Sector"
@@ -192,7 +197,7 @@ function SaveCompany(props) {
                         </MenuItem>
                     ))}
 
-                </TextField>
+                </Select>
             </Grid>
             <Grid item xs={12}>
                 <TextField
@@ -223,20 +228,39 @@ function SaveCompany(props) {
             </Grid>
 
             {
-                (checked) ? <Grid item xs={12} container>
-                    <Grid item xs={12}>
+                (comp.listedInStockExchange) ? <Grid item xs={12} container>
+                    {/* <Grid item xs={12}>
                         <Typography variant='h6'>
-                            Enter Company Codes
+                            Company Codes
                         </Typography>
                     </Grid>
-                    {[...Object.keys(comp.stockExchangeCodes)].map((key) => (
-                        <Grid item xs={6}>
-                            <currCompany key={key} value={comp.stockExchangeCodes[key]}></currCompany>
-                        </Grid>
+                    {
+                        [...Object.keys(comp.stockExchangeCodes)].map((key) => (
+                            <Grid item xs={12} container>
+                                {CompanyCodeEntry(key, comp.stockExchangeCodes[key])}
+                            </Grid>
 
-                    ))}
+                        ))
+                    } */}
+                    <TextField
+                        fullWidth
+
+                        id="outlined"
+                        label="Exchange Codes"
+                        placeholder="Codes"
+                        value={codes}
+                        onChange={(e) => setCodes(e.target.value)}
+                    >
+
+                    </TextField>
+                    <Button
+                        onClick={() => handleFieldChange("stockExchangeCodes", codes)}
+                    >
+                        Add
+                    </Button>
                 </Grid> : <Grid item xs={12}></Grid>
             }
+
 
             <Grid item xs={8}></Grid>
             <Grid item xs={4} sx={{

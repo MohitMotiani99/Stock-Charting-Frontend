@@ -251,7 +251,7 @@ export function setCurrSect2(payload) {
 
 export function getSectorStats(payload) {
     return async function (dispatch) {
-        fetch(`http://localhost:8086/prices/sector/stock-variations/${payload.sectorName}/${payload.companyName}?start=${payload.start}&end=${payload.end}`, {
+        fetch(`http://localhost:8086/prices/sector/stock-variations/${payload.sectorName}?start=${payload.start}&end=${payload.end}`, {
             method: 'GET'
         })
             .then(res => res.json())
@@ -268,7 +268,7 @@ export function getSectorStats(payload) {
 
 export function getSectorStats2(payload) {
     return async function (dispatch) {
-        fetch(`http://localhost:8086/prices/sector/stock-variations/${payload.sectorName}/${payload.companyName}?start=${payload.start}&end=${payload.end}`, {
+        fetch(`http://localhost:8086/prices/sector/stock-variations/${payload.sectorName}?start=${payload.start}&end=${payload.end}`, {
             method: 'GET'
         })
             .then(res => res.json())

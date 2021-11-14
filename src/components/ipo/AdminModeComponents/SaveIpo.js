@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox } from "@mui/material";
+import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -8,13 +8,14 @@ import { useNavigate } from "react-router";
 import { getSEList } from "../../../actions/StockExchangeActions";
 import { getCompanyList } from "../../../actions/CompanyActions";
 import DatePicker from 'react-datepicker'
-import { subYears } from "date-fns";
+import { setDate, subYears } from "date-fns";
 
 
 function SaveIpo(props) {
 
 
     let navigate = useNavigate();
+    let [date, setDate] = useState(new Date())
 
 
     let [ipo, setIpo] = useState({
@@ -59,10 +60,10 @@ function SaveIpo(props) {
                 totalStocks: Number.parseInt(value)
             })
         }
-        else if (field == "openDate") {
+        else if (field == "openDate" && value != null) {
             setIpo({
                 ...ipo,
-                openDate: value
+                openDate: value.toString()
             })
         }
         else if (field == "remarks") {
@@ -89,6 +90,8 @@ function SaveIpo(props) {
             </Grid>
             <Grid item xs={12}>
                 <Select
+                    sx={{ width: '100%' }}
+
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     value={ipo.stockExchangeName}
@@ -107,14 +110,15 @@ function SaveIpo(props) {
             </Grid>
             <Grid item xs={12}>
                 <Select
+                    sx={{ width: '100%' }}
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    value={props.companyName}
+                    value={ipo.companyName}
                     onChange={(e) => handleFieldChange("companyName", e.target.value)}
                     label="Select Company Name"
                 >
                     {
-                        (props.companyList).filter((comp) => stockName == "" || stockName == null || comp.getStockExchangeCodes.hasOwnProperty(stockName)).map((comp) => {
+                        (props.companyList).filter((comp) => ipo.stockExchangeName == "" || ipo.stockExchangeName == null || comp.stockExchangeCodes.hasOwnProperty(ipo.stockExchangeName)).map((comp) => {
                             return <MenuItem value={comp.companyName}>
                                 {comp.companyName}
                             </MenuItem>
@@ -125,8 +129,33 @@ function SaveIpo(props) {
 
             </Grid>
             <Grid item xs={12}>
+                <TextField id="filled-basic" label="Price/Share" variant="filled"
+                    sx={{ width: '100%' }}
+
+                    value={ipo.pricePerShare}
+                    type='number'
+                    onChange={(e) => handleFieldChange("pricePerShare", e.target.value)}
+                />
+
+            </Grid>
+            <Grid item xs={12}>
+                <TextField id="filled-basic" label="Total Shares" variant="filled"
+                    sx={{ width: '100%' }}
+
+                    value={ipo.totalStocks}
+                    type='number'
+                    onChange={(e) => handleFieldChange("totalStocks", e.target.value)}
+                />
+
+            </Grid>
+            <Grid item xs={12} container>
                 <span>
+                    <Grid item xs={12}>
+                        Opening Date
+                    </Grid>
                     <DatePicker
+                        sx={{ width: '100%' }}
+
                         selected={date}
                         onChange={d => {
                             setDate(d)
@@ -144,6 +173,8 @@ function SaveIpo(props) {
             </Grid>
             <Grid item xs={12}>
                 <TextField
+                    sx={{ width: '100%' }}
+
                     id="outlined-multiline-static"
                     label="Remarks"
                     multiline

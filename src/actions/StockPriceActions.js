@@ -283,3 +283,18 @@ export function getSectorStats2(payload) {
     }
 }
 
+export function saveStockPrice(payload) {
+    return async function (dispatch) {
+        fetch('http://localhost:8086/prices/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+    }
+}
+

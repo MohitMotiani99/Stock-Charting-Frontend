@@ -36,7 +36,7 @@ function App() {
 
           <Route exact path="/Login" element={<LoginPage />}></Route>
 
-          <Route exact path="/Ipos" element={<Ipos />}></Route>
+          <Route exact path="/IPOs" element={<Ipos />}></Route>
 
         </Routes>
       </BrowserRouter>

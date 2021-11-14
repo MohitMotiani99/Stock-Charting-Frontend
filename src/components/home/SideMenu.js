@@ -62,7 +62,7 @@ export default function SideMenu(props) {
                     <Grid item container direction='column'>
                         <List>
                             {
-                                ['', 'Companies', 'Exchanges', 'Sectors', 'Users', 'IPO', 'Upload'].map((text) => (
+                                ['', 'Companies', 'Exchanges', 'Sectors', 'Users', 'IPOs', 'Upload'].map((text) => (
                                     <Grid item xs={12}>
                                         <NavLink exact to={"/" + text}>
                                             <ListItem button key={text}>
@@ -81,7 +81,7 @@ export default function SideMenu(props) {
                                                                 return <SupervisedUserCircleIcon />
                                                             case 'Upload':
                                                                 return <UploadFileIcon />
-                                                            case 'IPO':
+                                                            case 'IPOs':
                                                                 return <MonetizationOnIcon />
 
                                                         }

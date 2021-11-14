@@ -18,10 +18,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
 
 function IpoList(props) {
+
+
 
     const newIpo = {
         companyName: "",
@@ -47,6 +50,7 @@ function IpoList(props) {
 
         setSearchString("")
         dispatch(IpoActions.getIpoList())
+        setIpos(props.ipoList)
         dispatch(StockExchangeActions.getSEList())
         dispatch(CompanyActions.getCompanyList())
         setIpos(props.ipoList)
@@ -83,13 +87,22 @@ function IpoList(props) {
 
             <Grid item container sx={{ pt: 20 }}>
                 <AppBar position='relative'>
-                    <Toolbar>
-                        <Grid item xs={2}>
+                    <Toolbar sx={{ bgcolor: 'whitesmoke' }}>
+                        <Grid item xs={2.5}>
                             <Select
+                                sx={{
+                                    width: '95%'
+                                }}
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
                                 value={stockName}
-                                onChange={(e) => setStockName(e.target.value)}
+                                onChange={async (e) => {
+                                    setStockName(e.target.value)
+                                    if (e.target.value != null && e.target.value != "")
+                                        setIpos((props.ipoList).filter(i => i.stockExchangeName == e.target.value))
+                                    else
+                                        setIpos(props.ipoList)
+                                }}
                                 label="Select Stock Exchange"
                             >
                                 {
@@ -102,16 +115,29 @@ function IpoList(props) {
 
                             </Select>
                         </Grid>
-                        <Grid item xs={2}>
+                        {console.log(props.companyList)}
+                        <Grid item xs={2.5}>
                             <Select
+                                sx={{
+                                    width: '95%'
+                                }}
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
                                 value={compName}
-                                onChange={(e) => setCompName(e.target.value)}
+
+                                onChange={async (e) => {
+
+                                    setCompName(e.target.value)
+                                    if (e.target.value != null && e.target.value != "")
+                                        setIpos((props.ipoList).filter(i => i.companyName == e.target.value))
+                                    else
+                                        setIpos(props.ipoList)
+
+                                }}
                                 label="Select Company Name"
                             >
                                 {
-                                    (props.companyList).filter((comp) => stockName == "" || stockName == null || comp.getStockExchangeCodes.hasOwnProperty(stockName)).map((comp) => {
+                                    (props.companyList).filter((comp) => stockName == "" || stockName == null || comp.stockExchangeCodes.hasOwnProperty(stockName)).map((comp) => {
                                         return <MenuItem value={comp.companyName}>
                                             {comp.companyName}
                                         </MenuItem>
@@ -121,34 +147,23 @@ function IpoList(props) {
                             </Select>
 
                         </Grid>
+                        <Grid item xs={1}></Grid>
                         <Grid item xs={2} >
                             <Button variant='contained' color='primary'
-                                onClick={() => IpoActions.getIpoFilterList()}
-                            >
-                                <IconButton>
-
-                                </IconButton>
-                                Filter
-                            </Button>
-                        </Grid>
-                        <Grid item xs={2} >
-                            <Button variant='contained' color='primary'
-                                onClick={() => {
-                                    IpoActions.getIpoList()
+                                onClick={(e) => {
+                                    setIpos(props.ipoList)
+                                    //IpoActions.getIpoList()
                                     setStockName("")
                                     setCompName("")
-                                    IpoActions.setIpoFilterList([])
+                                    //IpoActions.setIpoFilterList([])
                                 }}
                             >
-                                <IconButton>
-
-                                </IconButton>
                                 Reset
                             </Button>
                         </Grid>
                         <Grid item xs={1} />
                         <Grid item xs={3}>
-                            <Button variant='contained' color='success' fullWidth
+                            <Button variant='contained' color='success'
                                 onClick={() => {
                                     setOps("save")
                                     // dispatch(StockPriceActions.setCurrSector(newSector))
@@ -166,7 +181,7 @@ function IpoList(props) {
                 </AppBar>
             </Grid>
 
-
+            {console.log(ipos)}
             <TableContainer component={Paper}>
                 <Table sx={{}} aria-label="customized table">
                     <TableHead>
@@ -174,16 +189,17 @@ function IpoList(props) {
                             <StyledTableCell>Stock Exchange</StyledTableCell>
                             <StyledTableCell align="right">Company</StyledTableCell>
                             <StyledTableCell align="right">Price/Share</StyledTableCell>
-                            <StyledTableCell align="right">Total Shares(g)</StyledTableCell>
-                            <StyledTableCell align="right">Opening Date(g)</StyledTableCell>
+                            <StyledTableCell align="right">Total Shares</StyledTableCell>
+                            <StyledTableCell align="right">Opening Date</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {(props.ipoFilterList.length == 0 ? props.ipoList : props.ipoFilterList).map((row) => (
-                            <StyledTableRow key={row.stockExchangeName}>
+                        {(ipos.length == 0 || (stockName == "" && compName == "") ? props.ipoList : ipos).map((row) => (
+                            <StyledTableRow key={row.ipoId}>
                                 <StyledTableCell component="th" scope="row">
-                                    {row.companyName}
+                                    {row.stockExchangeName}
                                 </StyledTableCell>
+                                <StyledTableCell align="right">{row.companyName}</StyledTableCell>
                                 <StyledTableCell align="right">{row.pricePerShare}</StyledTableCell>
                                 <StyledTableCell align="right">{row.totalStocks}</StyledTableCell>
                                 <StyledTableCell align="right">{row.openDate}</StyledTableCell>
@@ -209,5 +225,5 @@ function mapStateToProps(state) {
         companyList: state.companyReducer.companyList
     }
 }
-
+// props.ipoFilterList.length == 0 ? props.ipoList : props.ipoFilterList
 export default connect(mapStateToProps)(IpoList)

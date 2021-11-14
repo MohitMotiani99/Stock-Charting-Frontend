@@ -87,7 +87,7 @@ function UserList(props) {
                                 <IconButton color='primary'>
                                     <AddIcon></AddIcon>
                                 </IconButton>
-                                Do Something
+                                Add User
                             </Button>
                         </Grid>
 

@@ -9,6 +9,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import CreateIcon from '@mui/icons-material/Create';
 import { NavLink } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 
 
@@ -60,7 +62,7 @@ export default function SideMenu(props) {
                     <Grid item container direction='column'>
                         <List>
                             {
-                                ['', 'Companies', 'Exchanges', 'Sectors', 'Users'].map((text) => (
+                                ['', 'Companies', 'Exchanges', 'Sectors', 'Users', 'IPO', 'Upload'].map((text) => (
                                     <Grid item xs={12}>
                                         <NavLink exact to={"/" + text}>
                                             <ListItem button key={text}>
@@ -77,6 +79,11 @@ export default function SideMenu(props) {
                                                                 return <AppsIcon />
                                                             case 'Users':
                                                                 return <SupervisedUserCircleIcon />
+                                                            case 'Upload':
+                                                                return <UploadFileIcon />
+                                                            case 'IPO':
+                                                                return <MonetizationOnIcon />
+
                                                         }
                                                     })()}
                                                     {/* <MenuIcon /> */}

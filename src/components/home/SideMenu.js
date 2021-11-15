@@ -11,6 +11,7 @@ import { NavLink } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import logo from '../../static/logo.png'
 
 
 
@@ -53,7 +54,9 @@ export default function SideMenu(props) {
                     open={true}
                 >
                     <Grid item xs={0} container display='flex' alignItems='center' justifyContent='flex-end'>
-                        <DrawerHeader display='flex'>
+                        <DrawerHeader display='flex'
+                        >
+
                         </DrawerHeader>
                     </Grid>
                     <Grid item xs={0}>
@@ -105,21 +108,23 @@ export default function SideMenu(props) {
                             {
                                 ['About', 'Creators'].map((text) => (
                                     <Grid item xs={12}>
-                                        <ListItem button key={text}>
-                                            <ListItemIcon>
-                                                {(() => {
-                                                    switch (text) {
-                                                        case 'About':
-                                                            return <InfoIcon />
-                                                        case 'Creators':
-                                                            return <CreateIcon />
+                                        <NavLink exact to={"/" + text}>
+                                            <ListItem button key={text}>
+                                                <ListItemIcon>
+                                                    {(() => {
+                                                        switch (text) {
+                                                            case 'About':
+                                                                return <InfoIcon />
+                                                            case 'Creators':
+                                                                return <CreateIcon />
 
-                                                    }
-                                                })()}
-                                                {/* <MenuIcon /> */}
-                                            </ListItemIcon>
-                                            <ListItemText primary={text} />
-                                        </ListItem>
+                                                        }
+                                                    })()}
+                                                    {/* <MenuIcon /> */}
+                                                </ListItemIcon>
+                                                <ListItemText primary={text} />
+                                            </ListItem>
+                                        </NavLink>
                                     </Grid>
                                 ))
 

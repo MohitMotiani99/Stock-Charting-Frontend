@@ -15,6 +15,8 @@ import UserPage from './components/user/UserPage';
 import LoginPage from './components/home/LoginPage';
 import Ipos from './components/ipo/Ipos';
 import Uploads from './components/upload/Uploads';
+import About from './components/about/About';
+import Creators from './components/creators/Creators';
 
 function App() {
   return (
@@ -40,6 +42,10 @@ function App() {
           <Route exact path="/IPOs" element={<Ipos />}></Route>
 
           <Route exact path="/Upload" element={<Uploads />}></Route>
+
+          <Route exact path="/About" element={<About />}></Route>
+
+          <Route exact path="/Creators" element={<Creators />}></Route>
 
         </Routes>
       </BrowserRouter>

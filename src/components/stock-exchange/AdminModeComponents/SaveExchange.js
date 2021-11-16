@@ -82,11 +82,8 @@ function SaveExchange(props) {
             <Grid item xs={12}>
                 <TextField
                     fullWidth
-                    multiline
-                    rows={5}
-                    maxRows={7}
-                    id="outlined-textxarea"
-                    label="brief"
+                    id="outlined-required"
+                    label="Brief"
                     placeholder="Brief"
                     value={exchange.brief}
                     onChange={(e) => handleFieldChange("brief", e.target.value)}
@@ -95,8 +92,11 @@ function SaveExchange(props) {
             <Grid item xs={12}>
                 <TextField
                     fullWidth
-                    id="outlined-required"
-                    label="remarks"
+                    multiline
+                    rows={5}
+                    maxRows={7}
+                    id="outlined-textxarea"
+                    label="Remarks"
                     placeholder="Remarks"
                     value={exchange.remarks}
                     onChange={(e) => handleFieldChange("remarks", e.target.value)}
@@ -131,22 +131,23 @@ function SaveExchange(props) {
                 <TextField
                     fullWidth
                     id="outlined"
-                    label="State"
-                    placeholder="State"
-                    value={exchange.contactAddress.state}
-                    onChange={(e) => handleFieldChange("state", e.target.value)}
+                    label="City"
+                    placeholder="City"
+                    value={exchange.contactAddress.city}
+                    onChange={(e) => handleFieldChange("city", e.target.value)}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
                     fullWidth
                     id="outlined"
-                    label="City"
-                    placeholder="Cityr"
-                    value={exchange.contactAddress.city}
-                    onChange={(e) => handleFieldChange("city", e.target.value)}
+                    label="State"
+                    placeholder="State"
+                    value={exchange.contactAddress.state}
+                    onChange={(e) => handleFieldChange("state", e.target.value)}
                 />
             </Grid>
+
             <Grid item xs={12}>
                 <TextField
                     fullWidth
@@ -162,7 +163,7 @@ function SaveExchange(props) {
                     fullWidth
                     id="outlined"
                     label="Zip"
-                    placeholder="Zipr"
+                    placeholder="Zip"
                     value={exchange.contactAddress.zip}
                     onChange={(e) => handleFieldChange("zip", e.target.value)}
                 />

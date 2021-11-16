@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox, Select } from "@mui/material";
+import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox, Select, InputLabel } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -89,6 +89,10 @@ function SaveIpo(props) {
                 </Button>
             </Grid>
             <Grid item xs={12}>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    Stock Exchange
+                </InputLabel>
+
                 <Select
                     sx={{ width: '100%' }}
 
@@ -109,6 +113,10 @@ function SaveIpo(props) {
                 </Select>
             </Grid>
             <Grid item xs={12}>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    Company
+                </InputLabel>
+
                 <Select
                     sx={{ width: '100%' }}
                     labelId="demo-simple-select-standard-label"

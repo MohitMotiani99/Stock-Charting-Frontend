@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox, Select } from "@mui/material";
+import { Button, Grid, IconButton, TextField, MenuItem, Typography, Checkbox, Select, InputLabel } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -180,6 +180,10 @@ function SaveCompany(props) {
                 />
             </Grid>
             <Grid item xs={12}>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    Sector
+                </InputLabel>
+
                 <Select
                     fullWidth
                     required
